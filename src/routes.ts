@@ -6,6 +6,7 @@ import { AuthenticateDeliverymanController } from "./models/account/authenticate
 import { CreateDeliveryController } from "./models/deliveries/useCase/createDelivery/CreateDeliveryController";
 import { ensureAuthenticateClient } from "./middlewares/ensureAuthenticateClient";
 import { FindAllAvailableController } from "./models/deliveries/useCase/findAllAvailable/FindAllAvailableController";
+import { ensureAuthenticateDeliveryman } from "./middlewares/ensureAuthenticateDeliveryman";
 
 export const routes = Router();
 
@@ -26,4 +27,4 @@ routes.post("/deliveryman", createDeliverymanController.handle)
 routes.post("/delivery", ensureAuthenticateClient, createDeliveryController.handle)
 
 //buscar
-routes.get("/delivery/available", findAllAvailableController.handle)
+routes.get("/delivery/available", ensureAuthenticateDeliveryman,findAllAvailableController.handle)

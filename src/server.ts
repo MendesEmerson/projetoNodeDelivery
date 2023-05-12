@@ -1,0 +1,11 @@
+import express from 'express';
+
+const app = express();
+
+app.get("/", (req, res) => {
+  return res.json("Hello World!");
+})
+
+app.listen(3001, () => {
+  console.log(`Servidor on`)
+})

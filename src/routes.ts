@@ -8,6 +8,7 @@ import { ensureAuthenticateClient } from "./middlewares/ensureAuthenticateClient
 import { FindAllAvailableController } from "./models/deliveries/useCase/findAllAvailable/FindAllAvailableController";
 import { ensureAuthenticateDeliveryman } from "./middlewares/ensureAuthenticateDeliveryman";
 import { UpdateDeliverymanController } from "./models/deliveries/useCase/updateDelivaryman/useCases/UpdateDeliverymanController";
+import { FindAllDeliveriesController } from "./models/clients/useCases/deliveries/FindAllDeliveriesController";
 
 export const routes = Router();
 
@@ -18,6 +19,7 @@ const authenticateDeliverymanController = new AuthenticateDeliverymanController(
 const createDeliveryController = new CreateDeliveryController()
 const findAllAvailableController = new FindAllAvailableController()
 const updateDeliverymanController = new UpdateDeliverymanController()
+const findAllDeliveriesClient = new FindAllDeliveriesController()
 
 //Login 
 routes.post("/login/client", authenticateClienteController.handle)
@@ -33,3 +35,4 @@ routes.put("/delivery/updateDeliveryman/:id", ensureAuthenticateDeliveryman, upd
 
 //buscar
 routes.get("/delivery/available", ensureAuthenticateDeliveryman,findAllAvailableController.handle)
+routes.get("/clients/deliveries", ensureAuthenticateClient, findAllDeliveriesClient.handle)

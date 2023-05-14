@@ -1,44 +1,82 @@
 import { Router } from "express";
-import { CreateClientController } from "./models/clients/useCases/createClient/createClientController";
-import { AuthenticateClientController } from "./models/account/authenticateClient/AUthenticateClientController";
-import { CreateDeliverymanController } from "./models/deliveryman/useCase/createDEliveryman/createDeliveryController";
-import { AuthenticateDeliverymanController } from "./models/account/authenticateDeliveryman/AuthenticateDEliverymanController";
-import { CreateDeliveryController } from "./models/deliveries/useCase/createDelivery/CreateDeliveryController";
+import { ClientController } from "./controller/ClientsController";
 import { ensureAuthenticateClient } from "./middlewares/ensureAuthenticateClient";
-import { FindAllAvailableController } from "./models/deliveries/useCase/findAllAvailable/FindAllAvailableController";
+import { AuthenticateController } from "./controller/AuthenticateController";
 import { ensureAuthenticateDeliveryman } from "./middlewares/ensureAuthenticateDeliveryman";
-import { UpdateDeliverymanController } from "./models/deliveries/useCase/updateDelivaryman/useCases/UpdateDeliverymanController";
-import { FindAllDeliveriesController } from "./models/clients/useCases/deliveries/FindAllDeliveriesController";
-import { FindAllDeliveriesDeliverymanController } from "./models/deliveryman/useCase/findAllDeliveries/FindAllDeliveriesDeliverymanController";
-import { UpdateEndDateController } from "./models/deliveries/useCase/updateEndDate/UpdateEndDateController";
+import { DeliverymanController } from "./controller/DeliverymanController";
+import { DeliveryController } from "./controller/DeliveryController";
 
 export const routes = Router();
 
-const createClientController = new CreateClientController();
-const authenticateClienteController = new AuthenticateClientController()
-const createDeliverymanController = new CreateDeliverymanController()
-const authenticateDeliverymanController = new AuthenticateDeliverymanController()
-const createDeliveryController = new CreateDeliveryController()
-const findAllAvailableController = new FindAllAvailableController()
-const updateDeliverymanController = new UpdateDeliverymanController()
-const findAllDeliveriesClient = new FindAllDeliveriesController()
-const findAllDeliveriesDeliveryman = new FindAllDeliveriesDeliverymanController()
-const updateEndDateController = new UpdateEndDateController()
+const clientController = new ClientController();
+const deliverymanController = new DeliverymanController();
+const authenticateController = new AuthenticateController();
+const deliveryController = new DeliveryController();
 
-//Login 
-routes.post("/login/client", authenticateClienteController.handle)
-routes.post("/login/deliveryman", authenticateDeliverymanController.handle)
+routes.post(
+  "/login/client", 
+  authenticateController.authenticateClient
+);
 
-//Criar
-routes.post("/clients", createClientController.handle);
-routes.post("/deliveryman", createDeliverymanController.handle)
-routes.post("/delivery", ensureAuthenticateClient, createDeliveryController.handle)
+routes.post(
+  "/login/deliveryman",
+  authenticateController.authenticateDeliveryman
+);
 
-//Atualização
-routes.put("/delivery/updateDeliveryman/:id", ensureAuthenticateDeliveryman, updateDeliverymanController.handle)
-routes.put("/delivery/updateEndDate/:id", ensureAuthenticateDeliveryman, updateEndDateController.handle)
+routes.get(
+  "/client/",
+  ensureAuthenticateClient,
+  clientController.findClientById
+);
 
-//buscar
-routes.get("/delivery/available", ensureAuthenticateDeliveryman,findAllAvailableController.handle)
-routes.get("/clients/deliveries", ensureAuthenticateClient, findAllDeliveriesClient.handle)
-routes.get("/deliveryman/deliveries", ensureAuthenticateDeliveryman, findAllDeliveriesDeliveryman.handle)
+routes.get(
+  "/client/deliveries",
+  ensureAuthenticateClient,
+  clientController.findAllDeliveries
+);
+
+routes.post(
+  "/client", 
+  clientController.createClient
+);
+
+routes.get(
+  "/deliveryman",
+  ensureAuthenticateDeliveryman,
+  deliverymanController.findDeliverymanById
+);
+
+routes.get(
+  "/deliveryman/deliveries",
+  ensureAuthenticateDeliveryman,
+  deliverymanController.findAllDeliveries
+);
+
+routes.post(
+  "/deliveryman", 
+  deliverymanController.createDeliveryman
+);
+
+routes.get(
+  "/delivery/available",
+  ensureAuthenticateDeliveryman,
+  deliveryController.findAllAvailable
+);
+
+routes.post(
+  "/delivery",
+  ensureAuthenticateClient,
+  deliveryController.createDelivery
+);
+
+routes.put(
+  "/delivery/updateDeliveryman/:id",
+  ensureAuthenticateDeliveryman,
+  deliveryController.updateDeliveryman
+);
+
+routes.put(
+  "/delivery/updateEndDate/:id",
+  ensureAuthenticateDeliveryman,
+  deliveryController.updateEndDate
+);

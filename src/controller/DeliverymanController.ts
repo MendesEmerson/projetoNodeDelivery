@@ -3,7 +3,7 @@ import { DeliverymanService } from "../services/DeliverymanService";
 
 const deliverymanService = new DeliverymanService();
 
-export class ClientController {
+export class DeliverymanController {
   async createDeliveryman(request: Request, response: Response) {
     const { username, password } = request.body;
     const newDeliveryman = await deliverymanService.createDeliveryman({ password, username });

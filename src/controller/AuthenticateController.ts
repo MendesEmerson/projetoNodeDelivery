@@ -14,7 +14,7 @@ export class AuthenticateController {
     return res.json(result)
   }
 
-  async handle(req: Request, res: Response) {
+  async authenticateDeliveryman(req: Request, res: Response) {
     const { username, password } = req.body;
     const result = await authenticateService.authenticateDeliveryman({
       username,

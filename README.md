@@ -73,6 +73,10 @@
 
 **POST:** /delivery/updateEndDate/id -> Acessando a API atraves do metodo post com a url /delivery/updateEndDate/id , o entregador finalizará a entrega que aceitou anteriormente. <br/>
 
+## Proximas implementações
+#### Criar funcionalidade para cadastrar restaurantes
+#### Criar funcionalidade para que cada restaurante cadastre seus itens
+
 
 
 

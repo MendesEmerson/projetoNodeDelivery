@@ -13,6 +13,8 @@ const deliverymanController = new DeliverymanController();
 const authenticateController = new AuthenticateController();
 const deliveryController = new DeliveryController();
 
+
+// ========================== Login ========================
 routes.post(
   "/login/client", 
   authenticateController.authenticateClient
@@ -23,6 +25,8 @@ routes.post(
   authenticateController.authenticateDeliveryman
 );
 
+
+// ========================== Client ========================
 routes.get(
   "/client/",
   ensureAuthenticateClient,
@@ -40,6 +44,8 @@ routes.post(
   clientController.createClient
 );
 
+
+// ========================== Deliveryman ========================
 routes.get(
   "/deliveryman",
   ensureAuthenticateDeliveryman,
@@ -57,6 +63,8 @@ routes.post(
   deliverymanController.createDeliveryman
 );
 
+
+// ========================== Deliveries ========================
 routes.get(
   "/delivery/available",
   ensureAuthenticateDeliveryman,

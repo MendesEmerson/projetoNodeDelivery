@@ -1,4 +1,5 @@
 import { prisma } from "../database/prismaClient";
+import { format } from "date-fns";
 
 interface ICreateDelivery {
   item_name: string;
@@ -12,9 +13,12 @@ interface IUpdateDeliveryman {
 
 export class DeliveryService {
   async createDelivery({ id_client, item_name }: ICreateDelivery) {
+    const currentDate = new Date();
+    const formattedDate = format(currentDate, "dd/MM/yyyy HH:mm");
     const delivery = await prisma.deliveries.create({
       data: {
         item_name,
+        created_at: formattedDate,
         id_client,
       },
     });
@@ -25,25 +29,27 @@ export class DeliveryService {
     const deliveries = await prisma.deliveries.findMany({
       where: {
         end_at: null,
-        id_deliveryman: null
-      }
-    })
-  return deliveries
+        id_deliveryman: null,
+      },
+    });
+    return deliveries;
   }
 
-  async updateDeliveryman({id_delivery, id_deliveryman}:IUpdateDeliveryman) {
+  async updateDeliveryman({ id_delivery, id_deliveryman }: IUpdateDeliveryman) {
     const result = await prisma.deliveries.update({
       where: {
-        id: id_delivery
+        id: id_delivery,
       },
       data: {
-        id_deliveryman
-      }
-    })
-    return result
+        id_deliveryman,
+      },
+    });
+    return result;
   }
 
   async updateEndDate({ id_delivery, id_deliveryman }: IUpdateDeliveryman) {
+    const currentDate = new Date();
+    const formattedDate = format(currentDate, "dd/MM/yyyy HH:mm");
     await prisma.deliveries.updateMany({
       where: {
         id: id_delivery,
@@ -52,7 +58,7 @@ export class DeliveryService {
         },
       },
       data: {
-        end_at: new Date(),
+        end_at: formattedDate,
       },
     });
 

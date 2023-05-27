@@ -13,7 +13,9 @@ export class FindAllDeliveriesCliientController {
             if(!id_client) {
                 return response.status(404).json({message: "Invalid Client id"})
             }
-            const clientDeliveries = findAllDeliveries.execute(id_client)
+            const clientDeliveries = await findAllDeliveries.execute(id_client)
+
+            console.log(clientDeliveries)
 
             return response.status(200).json(clientDeliveries)
 

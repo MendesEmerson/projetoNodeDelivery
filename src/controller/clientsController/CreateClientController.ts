@@ -3,6 +3,7 @@ import { ClientsRepository } from "../../repositories/clients/ClientsRepository"
 import { CreateClientService } from "../../services/clientService/CreateClientService";
 import { InvalidClientLoginException } from "../../services/exceptionsHandler/clientsExceptions/InvalidClientLoginException";
 import { ClientAlreadyExistException } from "../../services/exceptionsHandler/clientsExceptions/ClientAlreadyExistException";
+import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
 export class CreateClientController {
     async handle(request: Request, response: Response) {
@@ -30,7 +31,8 @@ export class CreateClientController {
             else if(error instanceof ClientAlreadyExistException){
                 return response.status(error.status).json(error)
             }
-            return response.status(500).json({message: "Internal Server Error"})
-        }
+            const uncaughtHandlerException = new UncaughtHandlerException()
+            return response.status(uncaughtHandlerException.status).json(uncaughtHandlerException)
+      }
     }
 }

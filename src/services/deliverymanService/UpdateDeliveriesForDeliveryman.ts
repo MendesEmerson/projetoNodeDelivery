@@ -1,4 +1,5 @@
 import { DeliverymanRepository } from "../../repositories/deliveryman/DeliverymanRepository";
+import { DeliveryNotFoundException } from "../exceptionsHandler/deliverymanExceptions/DeliveryNotFoundException";
 import { DeliverymanNotFoundException } from "../exceptionsHandler/deliverymanExceptions/DeliverymanNotFoundException";
 
 interface IUpdateDeliveries {
@@ -7,19 +8,24 @@ interface IUpdateDeliveries {
 }
 
 export class UpdateDeliveriesForDeliverymanService {
-    constructor(private deliverymanRepository: DeliverymanRepository){}
+    constructor(private deliverymanRepository: DeliverymanRepository) { }
 
-    async execute({delivery_id, deliveryman_id}:IUpdateDeliveries) {
+    async execute({ delivery_id, deliveryman_id }: IUpdateDeliveries) {
 
         const deliveryman = await this.deliverymanRepository.findDeliverymanById(deliveryman_id)
 
-        if(!deliveryman) {
+        const deliveriesExist = await this.deliverymanRepository.findAllAvailable()
+
+        deliveriesExist.forEach((delivery) => {
+            if (delivery.id !== delivery_id) {
+                throw new DeliveryNotFoundException()
+            }
+        })
+
+        if (!deliveryman) {
             throw new DeliverymanNotFoundException()
         }
 
-        if(!delivery_id) {
-            throw new Error("Delivery not found")
-        }
 
         const delivery = await this.deliverymanRepository.updateDeliveriesForDeliveryman({
             delivery_id,

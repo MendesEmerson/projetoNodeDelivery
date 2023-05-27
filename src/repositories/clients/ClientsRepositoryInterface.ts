@@ -10,4 +10,5 @@ export interface IClientsRepository {
     findClientByUsername(username: string): Promise<Clients | null>
 
     findAllDeliveries(client_id: string): Promise<Deliveries[] | undefined>
+
 }

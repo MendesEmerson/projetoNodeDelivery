@@ -1,10 +1,6 @@
 import { prisma } from "../database/prismaClient";
 import { format } from "date-fns";
 
-interface ICreateDelivery {
-  item_name: string;
-  id_client: string;
-}
 
 interface IUpdateDeliveryman {
   id_delivery: string;

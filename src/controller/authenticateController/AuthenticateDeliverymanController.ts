@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { AuthenticateRepository } from "../../repositories/authenticate/AuthenticateRepository";
 import { AuthenticateDeliverymanService } from "../../services/authenticateService/AuthenticateDeliverymanService";
 import { InvalidDeliverymanLoginException } from "../../services/exceptionsHandler/deliverymanExceptions/InvalidDeliverymanLoginException";
+import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
 export class AuthenticateDeliverymanController {
     async handle (request: Request, response:Response) {
@@ -25,7 +26,8 @@ export class AuthenticateDeliverymanController {
             if(error instanceof InvalidDeliverymanLoginException) {
                 return response.status(error.status).json(error)
             }
-            response.status(500).json({message: "Internal Server Error"})
-        }
+            const uncaughtHandlerException = new UncaughtHandlerException()
+            return response.status(uncaughtHandlerException.status).json(uncaughtHandlerException)
+      }
     }
 }

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
 import { FindClientByIdService } from "../../services/clientService/FindClientByIdService";
 import { ClientNotFoundException } from "../../services/exceptionsHandler/clientsExceptions/ClientNotFoundException";
+import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
 export class FindClientByIdController {
     async handle(request: Request, response: Response) {
@@ -24,7 +25,8 @@ export class FindClientByIdController {
             if(error instanceof ClientNotFoundException) {
                 return response.status(error.status).json(error)
             }
-            return response.status(500).json({message: "Internal Server Error"})
-        }
+            const uncaughtHandlerException = new UncaughtHandlerException()
+            return response.status(uncaughtHandlerException.status).json(uncaughtHandlerException)
+      }
     }
 }

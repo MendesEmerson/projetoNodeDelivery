@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { ProblemDetail } from './ProblemDetail';
 
+/*TODO: Classe para generalizar erro
+*/
 export class ExceptionHandler{
   static handle(
     error: unknown,

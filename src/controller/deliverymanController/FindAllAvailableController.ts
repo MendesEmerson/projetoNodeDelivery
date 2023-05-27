@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { DeliverymanRepository } from "../../repositories/deliveryman/DeliverymanRepository";
 import { FindAllAvailableService } from "../../services/deliverymanService/FindAllAvailableService";
+import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
 export class FindAllAvailableController {
     async handle(request: Request, response: Response) {
@@ -12,7 +13,8 @@ export class FindAllAvailableController {
 
             return response.status(200).json(allAvailable)
         } catch (error) {
-            return response.status(500).json({ message: "Internal server error" })
-        }
+            const uncaughtHandlerException = new UncaughtHandlerException()
+            return response.status(uncaughtHandlerException.status).json(uncaughtHandlerException)
+      }
     }
 }

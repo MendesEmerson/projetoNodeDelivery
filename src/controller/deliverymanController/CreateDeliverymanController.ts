@@ -3,6 +3,7 @@ import { DeliverymanRepository } from "../../repositories/deliveryman/Deliveryma
 import { CreateDeliverymanService } from "../../services/deliverymanService/CreateDeliverymanService";
 import { InvalidDeliverymanLoginException } from "../../services/exceptionsHandler/deliverymanExceptions/InvalidDeliverymanLoginException";
 import { DeliverymanAlreadyExistException } from "../../services/exceptionsHandler/deliverymanExceptions/DeliverymanAlreadyExistException";
+import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
 export class CreateDeliverymanController {
     async handle(request: Request, response: Response) {
@@ -29,7 +30,8 @@ export class CreateDeliverymanController {
             else if(error instanceof DeliverymanAlreadyExistException){
                 return response.status(error.status).json(error)
             }
-            return response.status(500).json({message: "Internal server error"})
-        }
+            const uncaughtHandlerException = new UncaughtHandlerException()
+            return response.status(uncaughtHandlerException.status).json(uncaughtHandlerException)
+      }
     }
 }

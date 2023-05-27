@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
 import { CreateDeliveriesService } from "../../services/clientService/CreateDeliveriesService";
+import { ClientNotFoundException } from "../../services/exceptionsHandler/clientsExceptions/ClientNotFoundException";
+import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
 export class CreateDeliveryController {
     async handle(request: Request, response: Response) {
@@ -12,7 +14,7 @@ export class CreateDeliveryController {
 
         try {
             if (!id_client) {
-                response.status(400).json({ message: "Invalid ID" })
+               throw new ClientNotFoundException()
             }
 
             const newDelivery = await createDelivery.execute({
@@ -22,7 +24,11 @@ export class CreateDeliveryController {
 
             return response.status(201).json(newDelivery)
         } catch (error) {
-            response.status(500).json({message: "Internal server error"})
-        }
+            if(error instanceof ClientNotFoundException) {
+                return response.status(error.status).json(error)
+            }
+            const uncaughtHandlerException = new UncaughtHandlerException()
+            return response.status(uncaughtHandlerException.status).json(uncaughtHandlerException)
+       }
     }
 }

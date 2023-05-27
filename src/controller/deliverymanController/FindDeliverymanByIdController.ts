@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { DeliverymanRepository } from "../../repositories/deliveryman/DeliverymanRepository";
 import { FindDeliverymanByIdService } from "../../services/deliverymanService/FindDeliverymanByIdService";
+import { DeliverymanNotFoundException } from "../../services/exceptionsHandler/deliverymanExceptions/DeliverymanNotFoundException";
+import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
 export class FindDeliverymanByIdController {
     async handle(request: Request, response: Response) {
@@ -11,14 +13,18 @@ export class FindDeliverymanByIdController {
 
         try {
             if(!id_deliveryman) {
-                return response.status(404).json({message: "Deliveryman not found"})
+                throw new DeliverymanNotFoundException()
             }
 
             const deliveryman = await findDeliverymanById.execute(id_deliveryman)
 
             return response.status(200).json(deliveryman)
         } catch (error) {
-            return response.status(500).json({message: "internal server error"})
-        }
+            if(error instanceof DeliverymanNotFoundException) {
+                return response.status(error.status).json(error)
+            }
+            const uncaughtHandlerException = new UncaughtHandlerException()
+            return response.status(uncaughtHandlerException.status).json(uncaughtHandlerException)
+      }
     }
 }

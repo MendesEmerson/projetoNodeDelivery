@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
+import { ClientNotFoundException } from "../exceptionsHandler/clientsExceptions/ClientNotFoundException";
 
 interface ICreateDelivery {
     item_name: string;
@@ -15,7 +16,7 @@ export class CreateDeliveriesService {
         const client = await this.clientsRepository.findClientById(id_client)
 
         if(!client) {
-            throw new Error("Client not found")
+            throw new ClientNotFoundException()
         }
 
         const createDelivery = await this.clientsRepository.createDelivery({

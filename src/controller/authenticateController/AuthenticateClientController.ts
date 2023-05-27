@@ -1,3 +1,4 @@
+import { UncaughtHandlerException } from './../../services/exceptionsHandler/UncaughtHandlerException';
 import { Request, Response } from "express";
 import { AuthenticateRepository } from "../../repositories/authenticate/AuthenticateRepository";
 import { AuthenticateClientService } from "../../services/authenticateService/AuthenticateClientService";
@@ -26,7 +27,8 @@ export class AuthenticateClientController {
             if(error instanceof InvalidClientLoginException) {
                 return response.status(error.status).json(error)
             }
-            return response.status(500).json({message: "Internal Server Error"})
+            const uncaughtHandlerException = new UncaughtHandlerException()
+            return response.status(uncaughtHandlerException.status).json(uncaughtHandlerException)
         }
     }
 }

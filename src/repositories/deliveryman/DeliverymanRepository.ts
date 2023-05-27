@@ -3,6 +3,17 @@ import { IDeliverymanRepository } from "./DeliverymanRepositoryInterface";
 import { prisma } from "../../database/prismaClient";
 
 export class DeliverymanRepository implements IDeliverymanRepository {
+    async findDeliverymanByUsername(username: string): Promise<Deliveryman | null> {
+        const deliveryman = await prisma.deliveryman.findFirst({
+            where: {
+                username: {
+                    equals: username,
+                    mode: "insensitive"
+                }
+            }
+        })
+        return deliveryman
+    }
     async createDeliveryman({ password, username }: Prisma.DeliverymanCreateInput): Promise<Deliveryman | null> {
         const createDeliveryman = await prisma.deliveryman.create({
             data: {

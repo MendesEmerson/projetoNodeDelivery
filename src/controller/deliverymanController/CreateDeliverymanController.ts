@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { DeliverymanRepository } from "../../repositories/deliveryman/DeliverymanRepository";
 import { CreateDeliverymanService } from "../../services/deliverymanService/CreateDeliverymanService";
 
-export class createDeliverymanController {
+export class CreateDeliverymanController {
     async handle(request: Request, response: Response) {
         const deliverymanRepository = new DeliverymanRepository()
         const createDeliverymanService = new CreateDeliverymanService(deliverymanRepository)

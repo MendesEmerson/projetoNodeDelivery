@@ -1,6 +1,7 @@
 import { compare } from "bcrypt";
 import { AuthenticateRepository } from "../../repositories/authenticate/AuthenticateRepository";
 import { sign } from "jsonwebtoken";
+import { InvalidClientLoginException } from "../exceptionsHandler/clientsExceptions/InvalidClientLoginException";
 
 interface IAuthClient {
     username: string
@@ -14,13 +15,13 @@ export class AuthenticateClientService {
         const client = await this.authenticateRepository.authenticateClient(password, username)
 
         if (!client) {
-            throw new Error("Invalid username or password");
+            throw new InvalidClientLoginException()
           }
       
           const passwordMatch = await compare(password, client.password);
       
           if (!passwordMatch) {
-            throw new Error("Invalid username or password");
+            throw new InvalidClientLoginException()
           }
       
           const token = sign({ username }, "bbca61cf2f25de7dfbe347b803122fda", {

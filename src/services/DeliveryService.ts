@@ -10,31 +10,8 @@ interface IUpdateDeliveryman {
   id_delivery: string;
   id_deliveryman: string;
 }
-
+ 
 export class DeliveryService {
-  async createDelivery({ id_client, item_name }: ICreateDelivery) {
-    const currentDate = new Date();
-    const formattedDate = format(currentDate, "dd/MM/yyyy HH:mm");
-    const delivery = await prisma.deliveries.create({
-      data: {
-        item_name,
-        created_at: formattedDate,
-        id_client,
-      },
-    });
-    return delivery;
-  }
-
-  async findAllAvailable() {
-    const deliveries = await prisma.deliveries.findMany({
-      where: {
-        end_at: null,
-        id_deliveryman: null,
-      },
-    });
-    return deliveries;
-  }
-
   async updateDeliveryman({ id_delivery, id_deliveryman }: IUpdateDeliveryman) {
     const result = await prisma.deliveries.update({
       where: {

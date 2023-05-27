@@ -4,42 +4,42 @@ import { DeliveryService } from "../services/DeliveryService";
 const deliveryService = new DeliveryService();
 
 export class DeliveryController {
-  async createDelivery(req: Request, res: Response) {
-    const { item_name } = req.body;
-    const { id_client } = req;
+  async createDelivery(request: Request, response: Response) {
+    const { item_name } = request.body;
+    const { id_client } = request;
     const delivery = await deliveryService.createDelivery({
       id_client,
       item_name,
     });
 
-    return res.json(delivery);
+    return response.json(delivery);
   }
 
-  async findAllAvailable(req: Request, res: Response) {
+  async findAllAvailable(request: Request, response: Response) {
     const deliveries = await deliveryService.findAllAvailable();
 
-    return res.json(deliveries);
+    return response.json(deliveries);
   }
 
-  async updateDeliveryman(req: Request, res: Response) {
-    const { id_deliveryman } = req;
-    const { id: id_delivery } = req.params;
+  async updateDeliveryman(request: Request, response: Response) {
+    const { id_deliveryman } = request;
+    const { id: id_delivery } = request.params;
     const delivery = await deliveryService.updateDeliveryman({
       id_deliveryman,
       id_delivery,
     });
 
-    return res.json(delivery);
+    return response.json(delivery);
   }
 
-  async updateEndDate(req: Request, res: Response) {
-    const { id_deliveryman } = req;
-    const { id: id_delivery } = req.params;
+  async updateEndDate(request: Request, response: Response) {
+    const { id_deliveryman } = request;
+    const { id: id_delivery } = request.params;
     const delivery = await deliveryService.updateEndDate({
       id_deliveryman,
       id_delivery
     })
 
-    return res.json(delivery)
+    return response.json(delivery)
   }
 }

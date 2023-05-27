@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { ensureAuthenticateClient } from "./middlewares/ensureAuthenticateClient";
 import { ensureAuthenticateDeliveryman } from "./middlewares/ensureAuthenticateDeliveryman";
-import { DeliverymanController } from "./controller/DeliverymanController";
 import { DeliveryController } from "./controller/DeliveryController";
 import { AuthenticateClientController } from "./controller/authenticateController/AuthenticateClientController";
 import { AuthenticateDeliverymanController } from "./controller/authenticateController/AuthenticateDeliverymanController";
@@ -10,10 +9,11 @@ import { CreateClientController } from "./controller/clientsController/CreateCli
 import { FindClientByIdController } from "./controller/clientsController/FindClientByIdController";
 import { CreateDeliverymanController } from "./controller/deliverymanController/CreateDeliverymanController";
 import { FindAllDeliveriesDeliverymanController } from "./controller/deliverymanController/FindAllDeliveriesController";
+import { FindDeliverymanByIdController } from "./controller/deliverymanController/FindDeliverymanByIdController";
+import { CreateDeliveryController } from "./controller/clientsController/CreateDeliveryController";
 
 export const routes = Router();
 
-const deliverymanController = new DeliverymanController();
 const deliveryController = new DeliveryController();
 
 
@@ -21,10 +21,12 @@ const authClientController = new AuthenticateClientController()
 const authDeliverymanController = new AuthenticateDeliverymanController()
 
 const createClient = new CreateClientController()
+const createDelivery = new CreateDeliveryController()
 const findClientById = new FindClientByIdController()
 const findAllDeliveriesClient = new FindAllDeliveriesCliientController()
 
 const createDeliveryman = new CreateDeliverymanController()
+const findDeliverymanById = new FindDeliverymanByIdController()
 const findAllDeliveriesDeliveryman = new FindAllDeliveriesDeliverymanController()
 
 
@@ -41,6 +43,8 @@ routes.post(
 
 
 // ========================== Client ========================
+
+//BUscar usuario por ID
 routes.get(
   "/client/",
   ensureAuthenticateClient,
@@ -59,18 +63,24 @@ routes.post(
 );
 
 
+routes.post(
+  "/client/delivery",
+  ensureAuthenticateClient,
+  createDelivery.handle
+);
+
 // ========================== Deliveryman ========================
 routes.get(
   "/deliveryman",
   ensureAuthenticateDeliveryman,
-  deliverymanController.findDeliverymanById
+  findDeliverymanById.handle
 );
 
 routes.get(
   "/deliveryman/deliveries",
   ensureAuthenticateDeliveryman,
   findAllDeliveriesDeliveryman.handle
-  );
+);
 
 routes.post(
   "/deliveryman",
@@ -85,11 +95,6 @@ routes.get(
   deliveryController.findAllAvailable
 );
 
-routes.post(
-  "/delivery",
-  ensureAuthenticateClient,
-  deliveryController.createDelivery
-);
 
 routes.put(
   "/delivery/updateDeliveryman/:id",

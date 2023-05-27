@@ -1,4 +1,5 @@
 import { DeliverymanRepository } from "../../repositories/deliveryman/DeliverymanRepository";
+import { DeliverymanNotFoundException } from "../exceptionsHandler/deliverymanExceptions/DeliverymanNotFoundException";
 
 export class FindDeliverymanByIdService {
     constructor(private deliverymanRepository: DeliverymanRepository) { }
@@ -7,7 +8,7 @@ export class FindDeliverymanByIdService {
         const deliveryman = await this.deliverymanRepository.findDeliverymanById(deliveryman_id)
 
         if (!deliveryman) {
-            throw new Error("Deliveryman not found")
+            throw new DeliverymanNotFoundException();
         }
 
         return deliveryman

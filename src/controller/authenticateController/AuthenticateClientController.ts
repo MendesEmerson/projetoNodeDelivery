@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AuthenticateRepository } from "../../repositories/authenticate/AuthenticateRepository";
 import { AuthenticateClientService } from "../../services/authenticateService/AuthenticateClientService";
+import { InvalidClientLoginException } from "../../services/exceptionsHandler/clientsExceptions/InvalidClientLoginException";
 
 export class AuthenticateClientController {
     async handle(request: Request, response: Response) {
@@ -11,7 +12,7 @@ export class AuthenticateClientController {
 
         try {
             if(!username || !password) {
-                return response.status(401).json({message: "Usuario ou Senha invalidos!"})
+                throw new InvalidClientLoginException()
             }
 
             const auth = await authClientService.execute({
@@ -22,6 +23,9 @@ export class AuthenticateClientController {
             return response.status(200).json(auth)
 
         } catch (error) {
+            if(error instanceof InvalidClientLoginException) {
+                return response.status(error.status).json(error)
+            }
             return response.status(500).json({message: "Internal Server Error"})
         }
     }

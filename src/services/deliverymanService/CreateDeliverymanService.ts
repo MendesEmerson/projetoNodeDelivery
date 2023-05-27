@@ -1,5 +1,6 @@
 import { hash } from "bcrypt";
 import { DeliverymanRepository } from "../../repositories/deliveryman/DeliverymanRepository";
+import { DeliverymanAlreadyExistException } from "../exceptionsHandler/deliverymanExceptions/DeliverymanAlreadyExistException";
 
 interface ICreateDeliveryman {
     username: string
@@ -14,7 +15,7 @@ export class CreateDeliverymanService {
         const verifyUsername = await this.deliverymanRepository.findDeliverymanByUsername(username)
 
         if(verifyUsername) {
-            throw new Error("Username already exist")
+            throw new DeliverymanAlreadyExistException()
         }
 
         const hashedPassword = await hash(password, 6);

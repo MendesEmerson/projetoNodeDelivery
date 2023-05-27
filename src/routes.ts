@@ -12,6 +12,7 @@ import { FindAllDeliveriesDeliverymanController } from "./controller/deliveryman
 import { FindDeliverymanByIdController } from "./controller/deliverymanController/FindDeliverymanByIdController";
 import { CreateDeliveryController } from "./controller/clientsController/CreateDeliveryController";
 import { FindAllAvailableController } from "./controller/deliverymanController/FindAllAvailableController";
+import { UpdateDeliveriesForDeliverymanController } from "./controller/deliverymanController/UpdateDeliveriesForDeliverymanController";
 
 export const routes = Router();
 
@@ -24,12 +25,13 @@ const authDeliverymanController = new AuthenticateDeliverymanController()
 const createClient = new CreateClientController()
 const createDelivery = new CreateDeliveryController()
 const findClientById = new FindClientByIdController()
-const findAllAvailable = new FindAllAvailableController()
 const findAllDeliveriesClient = new FindAllDeliveriesCliientController()
 
 const createDeliveryman = new CreateDeliverymanController()
+const findAllAvailable = new FindAllAvailableController()
 const findDeliverymanById = new FindDeliverymanByIdController()
 const findAllDeliveriesDeliveryman = new FindAllDeliveriesDeliverymanController()
+const updatdeDeliveriesForDeliveryman = new UpdateDeliveriesForDeliverymanController()
 
 
 // ========================== Login ========================
@@ -95,16 +97,15 @@ routes.post(
   createDeliveryman.handle
 );
 
+routes.put(
+  "/delivery/updateDeliveryman/:id_deliveries",
+  ensureAuthenticateDeliveryman,
+  updatdeDeliveriesForDeliveryman.handle
+);
+
 
 // ========================== Deliveries ========================
 
-
-
-routes.put(
-  "/delivery/updateDeliveryman/:id",
-  ensureAuthenticateDeliveryman,
-  deliveryController.updateDeliveryman
-);
 
 routes.put(
   "/delivery/updateEndDate/:id",

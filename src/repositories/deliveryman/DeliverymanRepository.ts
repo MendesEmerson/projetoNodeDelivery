@@ -2,12 +2,21 @@ import { Prisma, Deliveryman, Deliveries } from "@prisma/client";
 import { IDeliverymanRepository } from "./DeliverymanRepositoryInterface";
 import { prisma } from "../../database/prismaClient";
 
+interface IUpdateDeliveries {
+    delivery_id: string
+    deliveryman_id: string
+}
+
 export class DeliverymanRepository implements IDeliverymanRepository {
 
-    async updateDeliveriesForDeliveryman(data: Prisma.DeliveriesUpdateInput, where: Prisma.DeliveriesWhereUniqueInput): Promise<Deliveries> {
+    async updateDeliveriesForDeliveryman({delivery_id, deliveryman_id}: IUpdateDeliveries): Promise<Deliveries> {
         const deliveryUpdate = await prisma.deliveries.update({
-            data,
-            where
+            where:{
+                id: delivery_id
+            },
+            data: {
+                id_deliveryman: deliveryman_id
+            }
         })
         return deliveryUpdate
     }

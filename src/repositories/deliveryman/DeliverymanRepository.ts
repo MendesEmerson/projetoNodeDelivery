@@ -3,6 +3,26 @@ import { IDeliverymanRepository } from "./DeliverymanRepositoryInterface";
 import { prisma } from "../../database/prismaClient";
 
 export class DeliverymanRepository implements IDeliverymanRepository {
+
+    async updateDeliveriesForDeliveryman(data: Prisma.DeliveriesUpdateInput, where: Prisma.DeliveriesWhereUniqueInput): Promise<Deliveries> {
+        const deliveryUpdate = await prisma.deliveries.update({
+            data,
+            where
+        })
+        return deliveryUpdate
+    }
+
+    async findAllAvailable(): Promise<Deliveries[]> {
+        const deliveries = await prisma.deliveries.findMany({
+            where: {
+                id_deliveryman: null,
+                end_at: null
+            }
+        })
+
+        return deliveries
+    }
+
     async findDeliverymanByUsername(username: string): Promise<Deliveryman | null> {
         const deliveryman = await prisma.deliveryman.findFirst({
             where: {

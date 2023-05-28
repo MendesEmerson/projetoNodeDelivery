@@ -5,6 +5,12 @@ interface IUpdateDeliveries {
     deliveryman_id: string
 }
 
+interface IUpdateDeliveriesEnd {
+    delivery_id: string
+    deliveryman_id: string
+    date: string
+}
+
 export interface IDeliverymanRepository {
 
     createDeliveryman({ password, username }: Prisma.DeliverymanCreateInput): Promise<Deliveryman | null>
@@ -17,5 +23,7 @@ export interface IDeliverymanRepository {
 
     findAllDeliveries(deliveryman_id: string): Promise<Deliveries[] | undefined>
 
-    updateDeliveriesForDeliveryman({delivery_id, deliveryman_id}: IUpdateDeliveries): Promise<Deliveries>
+    updateDeliveriesForDeliveryman({ delivery_id, deliveryman_id }: IUpdateDeliveries): Promise<Deliveries>
+
+    updateDeliveriesEndDate({ delivery_id, deliveryman_id }: IUpdateDeliveriesEnd): Promise<Deliveries>
 }   

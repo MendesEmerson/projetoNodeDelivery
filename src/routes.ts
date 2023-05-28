@@ -13,11 +13,9 @@ import { FindDeliverymanByIdController } from "./controller/deliverymanControlle
 import { CreateDeliveryController } from "./controller/clientsController/CreateDeliveryController";
 import { FindAllAvailableController } from "./controller/deliverymanController/FindAllAvailableController";
 import { UpdateDeliveriesForDeliverymanController } from "./controller/deliverymanController/UpdateDeliveriesForDeliverymanController";
+import { UpdateDeliveriesEndDateController } from "./controller/deliverymanController/UpdateDeliveriesEndDateController";
 
 export const routes = Router();
-
-const deliveryController = new DeliveryController();
-
 
 const authClientController = new AuthenticateClientController()
 const authDeliverymanController = new AuthenticateDeliverymanController()
@@ -32,6 +30,7 @@ const findAllAvailable = new FindAllAvailableController()
 const findDeliverymanById = new FindDeliverymanByIdController()
 const findAllDeliveriesDeliveryman = new FindAllDeliveriesDeliverymanController()
 const updatdeDeliveriesForDeliveryman = new UpdateDeliveriesForDeliverymanController()
+const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
 
 
 // ========================== Login ========================
@@ -103,12 +102,11 @@ routes.put(
   updatdeDeliveriesForDeliveryman.handle
 );
 
-
-// ========================== Deliveries ========================
-
-
 routes.put(
-  "/delivery/updateEndDate/:id",
+  "/delivery/updateEndDate/:id_delivery",
   ensureAuthenticateDeliveryman,
-  deliveryController.updateEndDate
+  updatedDeliveriesEndDate.handle
 );
+
+
+

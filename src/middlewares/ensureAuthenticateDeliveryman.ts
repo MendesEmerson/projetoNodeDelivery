@@ -1,5 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, response } from "express";
 import { verify } from "jsonwebtoken";
+import { TokenMissingException } from "../services/exceptionsHandler/genericsExceptions/TokenMissingException";
+import { InvalidTokenException } from "../services/exceptionsHandler/genericsExceptions/InvalidTokenException";
 
 interface IPayload {
   sub: string;
@@ -9,9 +11,7 @@ export async function ensureAuthenticateDeliveryman(req: Request, res: Response,
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({
-      error: "Token missing",
-    });
+    throw new TokenMissingException()
   }
 
   const [, token] = authHeader.split(" ");
@@ -21,8 +21,10 @@ export async function ensureAuthenticateDeliveryman(req: Request, res: Response,
     req.id_deliveryman = sub
     return next()
   } catch (error) {
-    return res.status(401).json({
-      error: "Invalid token",
-    });
+    if (error instanceof TokenMissingException) {
+      return response.status(error.status).json(error)
+    }
+    const invalidToken = new InvalidTokenException()
+    return response.status(invalidToken.status).json(invalidToken)
   }
 }

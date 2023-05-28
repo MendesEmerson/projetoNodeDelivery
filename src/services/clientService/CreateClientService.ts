@@ -1,5 +1,6 @@
 import { hash } from "bcrypt";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
+import { ClientAlreadyExistException } from "../exceptionsHandler/clientsExceptions/ClientAlreadyExistException";
 
 interface ICreateClient {
     username: string
@@ -13,7 +14,7 @@ export class CreateClientService {
         const verifyUsername = await this.clientRepository.findClientByUsername(username)
 
         if(verifyUsername) {
-            throw new Error("Username already exist")
+            throw new ClientAlreadyExistException()
         }
 
         const hashedPassword = await hash(password, 6);

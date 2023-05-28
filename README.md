@@ -1,6 +1,8 @@
 # Node Delivery 
 #### Projeto que possibilita a criação de usuários e entregadores, estabelece a conexão entre eles via app. onde é possivel que os Clientes façam pedidos e os entregadores possam visualizar itens disponíveis para entregar.
 
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
+
 ## Tecnologias Utilizadas
 <a href="https://nodejs.org/en/download" title="Node">
   <img src="https://img.icons8.com/?size=48&id=54087&format=png" alt="Node">
@@ -83,6 +85,14 @@ Baixe as dependênias com o comando npm i ou npm install.
   <img src="https://i.pinimg.com/564x/0f/d4/f1/0fd4f1cb16ded33c582002031ad2a8f6.jpg" alt="diagrama">
 
      
-     
+## Contato dos Desenvolvedores
+
+<a href="https://github.com/mendesemerson">
+  <img src="https://avatars.githubusercontent.com/u/97401294?v=4" width="150">
+</a>
+<a href="https://github.com/juancassiano">
+  <img src="https://avatars.githubusercontent.com/u/59894338?v=4" width="150">
+</a>
+
 
 

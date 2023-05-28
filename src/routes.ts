@@ -34,11 +34,109 @@ const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
 
 
 // ========================== Login ========================
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: API endpoints for authentication
+ */
+
+/**
+ * @swagger
+ * /login/client:
+ *   post:
+ *     tags: [Authentication]
+ *     description: Authenticate user and generate token
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: Client's username
+ *               password:
+ *                 type: string
+ *                 description: Client's password
+ *             required:
+ *               - username
+ *               - password
+ *     responses:
+ *       200:
+ *         description: Client authenticated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: Access token
+ *             example:
+ *               token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
 routes.post(
   "/login/client",
   authClientController.handle
 );
 
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: API endpoints for authentication
+ */
+
+/**
+ * @swagger
+ * /login/deliveryman:
+ *   post:
+ *     tags: [Authentication]
+ *     description: Authenticate deliveryman and generate token
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: Deliveryman's username
+ *               password:
+ *                 type: string
+ *                 description: Deliveryman's password
+ *             required:
+ *               - username
+ *               - password
+ *     responses:
+ *       200:
+ *         description: Deliveryman authenticated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: Access token
+ *             example:
+ *               token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
 routes.post(
   "/login/deliveryman",
   authDeliverymanController.handle
@@ -60,6 +158,59 @@ routes.get(
   findAllDeliveriesClient.handle
 );
 
+/**
+ * @swagger
+ * tags:
+ *   name: Client
+ *   description: API endpoints for clients
+ */
+
+/**
+ * @swagger
+ * /client:
+ *   post:
+ *     tags: [Client]
+ *     description: Create client
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: Client's username
+ *               password:
+ *                 type: string
+ *                 description: Client's password
+ *             required:
+ *               - username
+ *               - password
+ *     responses:
+ *       201:
+ *         description: Client created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                   description: Client username
+ *                 password:
+ *                   type: string
+ *                   description: Client password
+ *             example:
+ *               username: usuario
+ *               password: senha123
+ *       400:
+ *         description: Bad request
+ *       409:
+ *         description: User already exists
+ *       500:
+ *         description: Internal server error
+ */
 routes.post(
   "/client",
   createClient.handle
@@ -91,6 +242,53 @@ routes.get(
   findAllAvailable.handle
 );
 
+
+/**
+ * @swagger
+ * /deliveryman:
+ *   post:
+ *     tags: [Deliveryman]
+ *     description: Create Deliveryman
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: Deliveryman's username
+ *               password:
+ *                 type: string
+ *                 description: Deliveryman's password
+ *             required:
+ *               - username
+ *               - password
+ *     responses:
+ *       201:
+ *         description: Deliveryman created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                   description: Client username
+ *                 password:
+ *                   type: string
+ *                   description: Client password
+ *             example:
+ *               username: usuario
+ *               password: senha123
+ *       400:
+ *         description: Bad request
+ *       409:
+ *         description: User already exists
+ *       500:
+ *         description: Internal server error
+ */
 routes.post(
   "/deliveryman",
   createDeliveryman.handle

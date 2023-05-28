@@ -1,10 +1,13 @@
+import swaggerUi  from 'swagger-ui-express';
 import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
 import { routes } from "./routes";
+import { specs } from './swagger';
 
 const app = express();
 app.use(express.json());
 app.use(routes);
+
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
     if (err instanceof Error) {
@@ -19,6 +22,9 @@ app.use(
   }
 );
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 app.listen(3001, () => {
-  console.log(`Servidor on`);
+  console.log(`Server is running on port 3001`);
+  console.log('Swagger docs are available at http://localhost:3001/api-docs');
 });

@@ -1,4 +1,5 @@
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
+import { ClientNotFoundException } from "../exceptionsHandler/clientsExceptions/ClientNotFoundException";
 
 export class FindClientByIdService {
     constructor(private clientsRepository: ClientsRepository){}
@@ -7,7 +8,7 @@ export class FindClientByIdService {
         const client = await this.clientsRepository.findClientById(client_id)
 
         if(!client) {
-            throw new Error("Client not exist")
+            throw new ClientNotFoundException();
         }
 
         return client

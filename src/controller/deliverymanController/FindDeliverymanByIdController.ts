@@ -1,26 +1,26 @@
 import { Request, Response } from "express";
 import { DeliverymanRepository } from "../../repositories/deliveryman/DeliverymanRepository";
-import { FindAllDeliveriesService } from "../../services/deliverymanService/FindAllDeliveriesService";
+import { FindDeliverymanByIdService } from "../../services/deliverymanService/FindDeliverymanByIdService";
 import { DeliverymanNotFoundException } from "../../services/exceptionsHandler/deliverymanExceptions/DeliverymanNotFoundException";
 import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
-export class FindAllDeliveriesDeliverymanController {
+export class FindDeliverymanByIdController {
     async handle(request: Request, response: Response) {
         const deliverymanRepository = new DeliverymanRepository()
-        const findAllDeliveriesService = new FindAllDeliveriesService(deliverymanRepository)
+        const findDeliverymanById = new FindDeliverymanByIdService(deliverymanRepository)
 
-        const {id_deliveryman} = request
+        const { id_deliveryman } = request
 
         try {
             if(!id_deliveryman) {
-                throw new DeliverymanNotFoundException();
+                throw new DeliverymanNotFoundException()
             }
 
-            const deliveries = await findAllDeliveriesService.execute(id_deliveryman)
-            
-            return response.status(200).json(deliveries)
+            const deliveryman = await findDeliverymanById.execute(id_deliveryman)
+
+            return response.status(200).json(deliveryman)
         } catch (error) {
-            if(error instanceof DeliverymanNotFoundException){
+            if(error instanceof DeliverymanNotFoundException) {
                 return response.status(error.status).json(error)
             }
             const uncaughtHandlerException = new UncaughtHandlerException()

@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
 import { CreateClientService } from "../../services/clientService/CreateClientService";
+import { InvalidClientLoginException } from "../../services/exceptionsHandler/clientsExceptions/InvalidClientLoginException";
+import { ClientAlreadyExistException } from "../../services/exceptionsHandler/clientsExceptions/ClientAlreadyExistException";
+import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
 export class CreateClientController {
     async handle(request: Request, response: Response) {
@@ -11,7 +14,7 @@ export class CreateClientController {
 
         try {
             if (!username || !password) {
-                return response.status(400).json({ message: "Os campos Username e Password são obrigatórios" })
+                throw new InvalidClientLoginException()
             }
 
             const createClient = await createClientService.execute({
@@ -22,7 +25,14 @@ export class CreateClientController {
             return response.status(201).json(createClient)
 
         } catch (error) {
-            return response.status(500).json({message: "Internal Server Error"})
-        }
+            if(error instanceof InvalidClientLoginException) {
+                return response.status(error.status).json(error)
+            } 
+            else if(error instanceof ClientAlreadyExistException){
+                return response.status(error.status).json(error)
+            }
+            const uncaughtHandlerException = new UncaughtHandlerException()
+            return response.status(uncaughtHandlerException.status).json(uncaughtHandlerException)
+      }
     }
 }

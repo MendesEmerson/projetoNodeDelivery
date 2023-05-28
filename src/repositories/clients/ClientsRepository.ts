@@ -3,6 +3,14 @@ import { IClientsRepository } from "./ClientsRepositoryInterface";
 import { prisma } from "../../database/prismaClient";
 
 export class ClientsRepository implements IClientsRepository {
+    
+    async createDelivery(data: Prisma.DeliveriesCreateInput): Promise<Deliveries> {
+        const createDelivery = await prisma.deliveries.create({
+            data
+        })
+        return createDelivery
+    }
+
     async findClientByUsername(username: string): Promise<Clients | null> {
         const clientExist = await prisma.clients.findFirst({
             where: {
@@ -16,12 +24,9 @@ export class ClientsRepository implements IClientsRepository {
         return clientExist
     }
 
-    async createClient({ password, username }: Prisma.ClientsCreateInput): Promise<Clients> {
+    async createClient(data: Prisma.ClientsCreateInput): Promise<Clients> {
         const client = await prisma.clients.create({
-            data: {
-                password,
-                username
-            }
+            data
         })
 
         return client

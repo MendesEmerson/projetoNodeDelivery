@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { ensureAuthenticateClient } from "./middlewares/ensureAuthenticateClient";
 import { ensureAuthenticateDeliveryman } from "./middlewares/ensureAuthenticateDeliveryman";
-import { DeliverymanController } from "./controller/DeliverymanController";
 import { DeliveryController } from "./controller/DeliveryController";
 import { AuthenticateClientController } from "./controller/authenticateController/AuthenticateClientController";
 import { AuthenticateDeliverymanController } from "./controller/authenticateController/AuthenticateDeliverymanController";
@@ -10,22 +9,28 @@ import { CreateClientController } from "./controller/clientsController/CreateCli
 import { FindClientByIdController } from "./controller/clientsController/FindClientByIdController";
 import { CreateDeliverymanController } from "./controller/deliverymanController/CreateDeliverymanController";
 import { FindAllDeliveriesDeliverymanController } from "./controller/deliverymanController/FindAllDeliveriesController";
+import { FindDeliverymanByIdController } from "./controller/deliverymanController/FindDeliverymanByIdController";
+import { CreateDeliveryController } from "./controller/clientsController/CreateDeliveryController";
+import { FindAllAvailableController } from "./controller/deliverymanController/FindAllAvailableController";
+import { UpdateDeliveriesForDeliverymanController } from "./controller/deliverymanController/UpdateDeliveriesForDeliverymanController";
+import { UpdateDeliveriesEndDateController } from "./controller/deliverymanController/UpdateDeliveriesEndDateController";
 
 export const routes = Router();
-
-const deliverymanController = new DeliverymanController();
-const deliveryController = new DeliveryController();
-
 
 const authClientController = new AuthenticateClientController()
 const authDeliverymanController = new AuthenticateDeliverymanController()
 
 const createClient = new CreateClientController()
+const createDelivery = new CreateDeliveryController()
 const findClientById = new FindClientByIdController()
 const findAllDeliveriesClient = new FindAllDeliveriesCliientController()
 
 const createDeliveryman = new CreateDeliverymanController()
+const findAllAvailable = new FindAllAvailableController()
+const findDeliverymanById = new FindDeliverymanByIdController()
 const findAllDeliveriesDeliveryman = new FindAllDeliveriesDeliverymanController()
+const updatdeDeliveriesForDeliveryman = new UpdateDeliveriesForDeliverymanController()
+const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
 
 
 // ========================== Login ========================
@@ -41,6 +46,8 @@ routes.post(
 
 
 // ========================== Client ========================
+
+//BUscar usuario por ID
 routes.get(
   "/client/",
   ensureAuthenticateClient,
@@ -59,46 +66,47 @@ routes.post(
 );
 
 
+routes.post(
+  "/client/delivery",
+  ensureAuthenticateClient,
+  createDelivery.handle
+);
+
 // ========================== Deliveryman ========================
 routes.get(
   "/deliveryman",
   ensureAuthenticateDeliveryman,
-  deliverymanController.findDeliverymanById
+  findDeliverymanById.handle
 );
 
 routes.get(
   "/deliveryman/deliveries",
   ensureAuthenticateDeliveryman,
   findAllDeliveriesDeliveryman.handle
-  );
+);
+
+routes.get(
+  "/delivery/available",
+  ensureAuthenticateDeliveryman,
+  findAllAvailable.handle
+);
 
 routes.post(
   "/deliveryman",
   createDeliveryman.handle
 );
 
-
-// ========================== Deliveries ========================
-routes.get(
-  "/delivery/available",
+routes.put(
+  "/delivery/updateDeliveryman/:id_deliveries",
   ensureAuthenticateDeliveryman,
-  deliveryController.findAllAvailable
-);
-
-routes.post(
-  "/delivery",
-  ensureAuthenticateClient,
-  deliveryController.createDelivery
+  updatdeDeliveriesForDeliveryman.handle
 );
 
 routes.put(
-  "/delivery/updateDeliveryman/:id",
+  "/delivery/updateEndDate/:id_delivery",
   ensureAuthenticateDeliveryman,
-  deliveryController.updateDeliveryman
+  updatedDeliveriesEndDate.handle
 );
 
-routes.put(
-  "/delivery/updateEndDate/:id",
-  ensureAuthenticateDeliveryman,
-  deliveryController.updateEndDate
-);
+
+

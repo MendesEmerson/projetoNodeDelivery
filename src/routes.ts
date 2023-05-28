@@ -461,6 +461,3 @@ routes.put(
   ensureAuthenticateDeliveryman,
   updatedDeliveriesEndDate.handle
 );
-
-
-

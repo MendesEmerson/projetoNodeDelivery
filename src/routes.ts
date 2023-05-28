@@ -157,12 +157,6 @@ routes.get(
   findAllDeliveriesClient.handle
 );
 
-/**
- * @swagger
- * tags:
- *   name: Client
- *   description: API endpoints for clients
- */
 
 /**
  * @swagger
@@ -229,12 +223,175 @@ routes.get(
   findDeliverymanById.handle
 );
 
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
+ * /deliveryman/deliveries:
+ *   get:
+ *     tags: [Deliveries]
+ *     description: List all deliveries for deliveryman
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of deliveries for deliveryman
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The ID of the delivery
+ *                   example: uuid
+ *                 id_client:
+ *                   type: string
+ *                   description: The ID of the client
+ *                   example: uuid
+ *                 id_deliveryman:
+ *                   type: string
+ *                   description: The ID of the deliveryman
+ *                   example: uuid
+ *                 item_name:
+ *                   type: string
+ *                   description: The name of the item
+ *                   example: churrasco
+ *                 created_at:
+ *                   type: string
+ *                   description: The creation date of the delivery
+ *                   example: '2023-05-27T01:51:00.000Z'
+ *                 end_at:
+ *                   type: string
+ *                   nullable: true
+ *                   description: The end date of the delivery (null if not ended)
+ *                   example: null
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ *                   example: not found
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ *                   example: Unauthorized
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ *                   example: Internal Server Error
+ */
 routes.get(
   "/deliveryman/deliveries",
   ensureAuthenticateDeliveryman,
   findAllDeliveriesDeliveryman.handle
 );
 
+
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
+ * /deliveryman/avaliable:
+ *   get:
+ *     tags: [Deliveries]
+ *     description: List all deliveries avaliable for deliveryman
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of deliveries avaliables for deliveryman
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The ID of the delivery
+ *                   example: uuid
+ *                 id_client:
+ *                   type: string
+ *                   description: The ID of the client
+ *                   example: uuid
+ *                 item_name:
+ *                   type: string
+ *                   description: The name of the item
+ *                   example: churrasco
+ *                 created_at:
+ *                   type: string
+ *                   description: The creation date of the delivery
+ *                   example: '2023-05-27T01:51:00.000Z'
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ *                   example: not found
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ *                   example: Unauthorized
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The error message
+ *                   example: Internal Server Error
+ */
 routes.get(
   "/delivery/available",
   ensureAuthenticateDeliveryman,

@@ -12,10 +12,6 @@ export class FindAllDeliveriesDeliverymanController {
         const {id_deliveryman} = request
 
         try {
-            if(!id_deliveryman) {
-                throw new DeliverymanNotFoundException();
-            }
-
             const deliveries = await findAllDeliveriesService.execute(id_deliveryman)
             
             return response.status(200).json(deliveries)

@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { ensureAuthenticateClient } from "./middlewares/ensureAuthenticateClient";
 import { ensureAuthenticateDeliveryman } from "./middlewares/ensureAuthenticateDeliveryman";
-import { DeliveryController } from "./controller/DeliveryController";
 import { AuthenticateClientController } from "./controller/authenticateController/AuthenticateClientController";
 import { AuthenticateDeliverymanController } from "./controller/authenticateController/AuthenticateDeliverymanController";
 import { FindAllDeliveriesCliientController } from "./controller/clientsController/FindAllDeliveriesController";

@@ -10,16 +10,17 @@ export class CreateDeliverymanController {
         const deliverymanRepository = new DeliverymanRepository()
         const createDeliverymanService = new CreateDeliverymanService(deliverymanRepository)
 
-        const { username, password } = request.body
+        const { username, password, name } = request.body
 
         try {
-            if (!username || !password) {
+            if (!username || !password || !name) {
                 throw new InvalidDeliverymanLoginException()
             }
 
             const newDeliveryman = await createDeliverymanService.execute({
                 password,
-                username
+                username,
+                name
             })
 
             return response.status(201).json(newDeliveryman)

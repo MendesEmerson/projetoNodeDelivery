@@ -5,11 +5,12 @@ import { ClientAlreadyExistException } from "../exceptionsHandler/clientsExcepti
 interface ICreateClient {
     username: string
     password: string
+    name: string
 }
 
 export class CreateClientService {
     constructor(private clientRepository: ClientsRepository) { }
-    async execute({ password, username }: ICreateClient) {
+    async execute({ password, username, name }: ICreateClient) {
 
         const verifyUsername = await this.clientRepository.findClientByUsername(username)
 
@@ -21,7 +22,8 @@ export class CreateClientService {
 
         const newClient = await this.clientRepository.createClient({
             password: hashedPassword,
-            username
+            username,
+            name
         })
 
         return newClient

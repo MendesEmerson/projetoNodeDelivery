@@ -10,16 +10,17 @@ export class CreateClientController {
         const clientsRepository = new ClientsRepository()
         const createClientService = new CreateClientService(clientsRepository)
 
-        const { username, password } = request.body
+        const { username, password, name } = request.body
 
         try {
-            if (!username || !password) {
+            if (!username || !password || !name) {
                 throw new InvalidClientLoginException()
             }
 
             const createClient = await createClientService.execute({
                 password,
-                username
+                username,
+                name
             })
 
             return response.status(201).json(createClient)

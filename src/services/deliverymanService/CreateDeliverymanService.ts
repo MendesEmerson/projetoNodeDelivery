@@ -5,12 +5,13 @@ import { DeliverymanAlreadyExistException } from "../exceptionsHandler/deliverym
 interface ICreateDeliveryman {
     username: string
     password: string
+    name: string
 }
 
 export class CreateDeliverymanService {
     constructor(private deliverymanRepository: DeliverymanRepository) { }
 
-    async execute({ password, username }: ICreateDeliveryman) {
+    async execute({ password, username, name }: ICreateDeliveryman) {
 
         const verifyUsername = await this.deliverymanRepository.findDeliverymanByUsername(username)
 
@@ -22,7 +23,8 @@ export class CreateDeliverymanService {
 
         const createDeliveryman = await this.deliverymanRepository.createDeliveryman({
             password: hashedPassword,
-            username
+            username,
+            name
         })
 
         return createDeliveryman

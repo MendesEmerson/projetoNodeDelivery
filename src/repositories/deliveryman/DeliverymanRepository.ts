@@ -44,6 +44,13 @@ export class DeliverymanRepository implements IDeliverymanRepository {
             where: {
                 id_deliveryman: null,
                 end_at: null
+            },
+            include: {
+                client: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         })
 

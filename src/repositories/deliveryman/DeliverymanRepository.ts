@@ -14,26 +14,58 @@ interface IUpdateDeliveriesEnd {
 }
 
 export class DeliverymanRepository implements IDeliverymanRepository {
-    
+    async findAllFinishDeliveries(deliveryman_id: string): Promise<Deliveries[] | undefined> {
+        const deliveries = await prisma.deliveries.findMany({
+            where: {
+                id_deliveryman: deliveryman_id,
+                end_at: { not: null }
+            },
+            include: {
+                client: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        })
+
+        return deliveries
+
+    }
+
     async updateDeliveriesEndDate({ delivery_id, date }: IUpdateDeliveriesEnd): Promise<Deliveries> {
         const deliveryUpdate = await prisma.deliveries.update({
             where: {
                 id: delivery_id,
-              },
-              data: {
+            },
+            data: {
                 end_at: date,
-              }
+            },
+            include: {
+                client: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
         })
         return deliveryUpdate
     }
 
-    async updateDeliveriesForDeliveryman({delivery_id, deliveryman_id}: IUpdateDeliveries): Promise<Deliveries> {
+    async updateDeliveriesForDeliveryman({ delivery_id, deliveryman_id }: IUpdateDeliveries): Promise<Deliveries> {
         const deliveryUpdate = await prisma.deliveries.update({
-            where:{
+            where: {
                 id: delivery_id
             },
             data: {
                 id_deliveryman: deliveryman_id
+            },
+            include: {
+                client: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         })
         return deliveryUpdate
@@ -90,16 +122,21 @@ export class DeliverymanRepository implements IDeliverymanRepository {
     }
 
     async findAllDeliveries(deliveryman_id: string): Promise<Deliveries[] | undefined> {
-        const deliveryman = await prisma.deliveryman.findUnique({
+        const deliveries = await prisma.deliveries.findMany({
             where: {
-                id: deliveryman_id
+                id_deliveryman: deliveryman_id,
+                end_at: null
             },
             include: {
-                deliveries: true
+                client: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         })
 
-        return deliveryman?.deliveries
+        return deliveries
     }
 
 }

@@ -16,9 +16,12 @@ export class UpdateDeliveriesForDeliverymanService {
 
         const deliveriesExist = await this.deliverymanRepository.findAllAvailable()
 
-        deliveriesExist.forEach((delivery) => {
-            if (delivery.id !== delivery_id) {
-                throw new DeliveryNotFoundException()
+        let deliveryFound = false;
+
+        deliveriesExist.forEach((entregas) => {
+            if (entregas.id === delivery_id) {
+                deliveryFound = true;
+                return; // Interrompe o loop forEach
             }
         })
 
@@ -26,6 +29,9 @@ export class UpdateDeliveriesForDeliverymanService {
             throw new DeliverymanNotFoundException()
         }
 
+        if (!deliveryFound) {
+            throw new DeliveryNotFoundException();
+        }
 
         const delivery = await this.deliverymanRepository.updateDeliveriesForDeliveryman({
             delivery_id,

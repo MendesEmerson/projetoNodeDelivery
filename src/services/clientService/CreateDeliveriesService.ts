@@ -1,3 +1,4 @@
+import { Deliveries } from '@prisma/client';
 import { format } from "date-fns";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
 import { ClientNotFoundException } from "../exceptionsHandler/clientsExceptions/ClientNotFoundException";
@@ -14,20 +15,26 @@ export class CreateDeliveriesService {
         const currentDate = new Date();
         const formattedDate = format(currentDate, "dd/MM/yyyy HH:mm");
         const client = await this.clientsRepository.findClientById(id_client)
-
+        const clientName = await this.clientsRepository.findClientById(id_client)
+       
         if(!client) {
             throw new ClientNotFoundException()
         }
 
         const createDelivery = await this.clientsRepository.createDelivery({
             client: {
-                connect: {id: client.id}
+                connect: {id: client.id},
+                
             },
+            
             created_at: formattedDate,
-            item_name
+            item_name,
+            
         })
+        
 
-        return createDelivery
+
+        return {delivery: createDelivery, client: client}
 
     }
 

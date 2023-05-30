@@ -13,6 +13,7 @@ import { CreateDeliveryController } from "./controller/clientsController/CreateD
 import { FindAllAvailableController } from "./controller/deliverymanController/FindAllAvailableController";
 import { UpdateDeliveriesForDeliverymanController } from "./controller/deliverymanController/UpdateDeliveriesForDeliverymanController";
 import { UpdateDeliveriesEndDateController } from "./controller/deliverymanController/UpdateDeliveriesEndDateController";
+import { FindAllFinishDeliveriesDeliverymanController } from "./controller/deliverymanController/FindAllFInishDeliveriesController";
 
 export const routes = Router();
 
@@ -28,6 +29,7 @@ const createDeliveryman = new CreateDeliverymanController()
 const findAllAvailable = new FindAllAvailableController()
 const findDeliverymanById = new FindDeliverymanByIdController()
 const findAllDeliveriesDeliveryman = new FindAllDeliveriesDeliverymanController()
+const findALlFinishDeliveriesDeliveryman = new FindAllFinishDeliveriesDeliverymanController()
 const updatdeDeliveriesForDeliveryman = new UpdateDeliveriesForDeliverymanController()
 const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
 
@@ -397,6 +399,13 @@ routes.get(
   ensureAuthenticateDeliveryman,
   findAllAvailable.handle
 );
+
+
+routes.get(
+  "/deliveryman/deliveries/finish",
+  ensureAuthenticateDeliveryman,
+  findALlFinishDeliveriesDeliveryman.handle
+)
 
 
 /**

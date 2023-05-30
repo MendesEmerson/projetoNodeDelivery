@@ -11,4 +11,7 @@ export interface IClientsRepository {
 
     findAllDeliveries(client_id: string): Promise<Deliveries[] | undefined>
 
+    findAllAcceptedDeliveries(client_id: string): Promise<Deliveries[] | undefined>
+
+
 }

@@ -27,6 +27,26 @@ model Clients {
   @@map("clients")
 }
 
+model Restaurants {
+  id       String  @id @default(uuid())
+  name     String
+  username String  @unique
+  password String
+  items    Items[]
+
+  @@map("restaurants")
+}
+
+model Items {
+  id            String       @id @default(uuid())
+  item_name     String
+  category      String
+  Restaurants   Restaurants? @relation(fields: [restaurantsId], references: [id])
+  restaurantsId String?
+
+  @@map("items")
+}
+
 model Deliveries {
   id             String       @id @default(uuid())
   id_client      String

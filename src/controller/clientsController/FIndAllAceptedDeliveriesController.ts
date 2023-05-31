@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
 import { ClientNotFoundException } from "../../services/exceptionsHandler/clientsExceptions/ClientNotFoundException";
 import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
-import { FindAllAcceptedDeliveriesClientService } from "../../services/clientService/findAllAcceptedDeliveriesService";
+import { FindAllAcceptedDeliveriesClientService } from "../../services/clients/findAllAcceptedDeliveriesService";
 
 export class FindAllAcceptedDeliveriesController {
     async handle(request: Request, response: Response) {

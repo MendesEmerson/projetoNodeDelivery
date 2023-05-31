@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { DeliverymanRepository } from "../../repositories/deliveryman/DeliverymanRepository";
 import { DeliverymanNotFoundException } from "../../services/exceptionsHandler/deliverymanExceptions/DeliverymanNotFoundException";
 import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
-import { FindAllFinishDeliveriesService } from "../../services/deliverymanService/FindAllFinishDeliveriesService";
+import { FindAllFinishDeliveriesService } from "../../services/deliveryman/FindAllFinishDeliveriesService";
 
 export class FindAllFinishDeliveriesDeliverymanController {
     async handle(request: Request, response: Response) {

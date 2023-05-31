@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DeliverymanRepository } from "../../repositories/deliveryman/DeliverymanRepository";
-import { CreateDeliverymanService } from "../../services/deliverymanService/CreateDeliverymanService";
+import { CreateDeliverymanService } from "../../services/deliveryman/CreateDeliverymanService";
 import { InvalidDeliverymanLoginException } from "../../services/exceptionsHandler/deliverymanExceptions/InvalidDeliverymanLoginException";
 import { DeliverymanAlreadyExistException } from "../../services/exceptionsHandler/deliverymanExceptions/DeliverymanAlreadyExistException";
 import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DeliverymanRepository } from "../../repositories/deliveryman/DeliverymanRepository";
-import { FindAllAvailableService } from "../../services/deliverymanService/FindAllAvailableService";
+import { FindAllAvailableService } from "../../services/deliveryman/FindAllAvailableService";
 import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
 export class FindAllAvailableController {

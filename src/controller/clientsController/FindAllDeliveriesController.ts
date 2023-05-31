@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
 import { ClientNotFoundException } from "../../services/exceptionsHandler/clientsExceptions/ClientNotFoundException";
-import { FindAllDeliveriesClientService } from "../../services/clientService/FindAllDeliveriesClientService";
+import { FindAllDeliveriesClientService } from "../../services/clients/FindAllDeliveriesClientService";
 import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 
 export class FindAllDeliveriesCliientController {

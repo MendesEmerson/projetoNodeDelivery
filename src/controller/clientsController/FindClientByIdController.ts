@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
-import { FindClientByIdService } from "../../services/clientService/FindClientByIdService";
+import { FindClientByIdService } from "../../services/clients/FindClientByIdService";
 import { ClientNotFoundException } from "../../services/exceptionsHandler/clientsExceptions/ClientNotFoundException";
 import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 

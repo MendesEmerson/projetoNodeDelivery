@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
-import { CreateClientService } from "../../services/clientService/CreateClientService";
+import { CreateClientService } from "../../services/clients/CreateClientService";
 import { InvalidClientLoginException } from "../../services/exceptionsHandler/clientsExceptions/InvalidClientLoginException";
 import { ClientAlreadyExistException } from "../../services/exceptionsHandler/clientsExceptions/ClientAlreadyExistException";
 import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";

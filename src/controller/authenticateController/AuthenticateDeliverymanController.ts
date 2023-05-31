@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AuthenticateRepository } from "../../repositories/authenticate/AuthenticateRepository";
-import { AuthenticateDeliverymanService } from "../../services/authenticateService/AuthenticateDeliverymanService";
+import { AuthenticateDeliverymanService } from "../../services/authenticate/AuthenticateDeliverymanService";
 import { InvalidDeliverymanLoginException } from "../../services/exceptionsHandler/deliverymanExceptions/InvalidDeliverymanLoginException";
 import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 

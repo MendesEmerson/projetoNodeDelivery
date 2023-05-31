@@ -3,10 +3,23 @@ import { IClientsRepository } from "./ClientsRepositoryInterface";
 import { prisma } from "../../database/prismaClient";
 
 export class ClientsRepository implements IClientsRepository {
-    findAllAcceptedDeliveries(client_id: string): Promise<Deliveries[] | undefined> {
-        throw new Error("Method not implemented.");
+    async findAllAcceptedDeliveries(client_id: string): Promise<Deliveries[] | undefined> {
+        const deliveries = await prisma.deliveries.findMany({
+            where: {
+                id_client: client_id,
+                id_deliveryman: { not: null },
+            },
+            include: {
+                deliveryman: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        })
+        return deliveries
     }
-    
+
     async createDelivery(data: Prisma.DeliveriesCreateInput): Promise<Deliveries> {
         const createDelivery = await prisma.deliveries.create({
             data
@@ -51,6 +64,13 @@ export class ClientsRepository implements IClientsRepository {
                 id_client: client_id,
                 id_deliveryman: null,
             },
+            include: {
+                deliveryman: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
         })
 
         return deliveries

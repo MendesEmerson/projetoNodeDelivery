@@ -14,6 +14,7 @@ import { FindAllAvailableController } from "./controller/deliverymanController/F
 import { UpdateDeliveriesForDeliverymanController } from "./controller/deliverymanController/UpdateDeliveriesForDeliverymanController";
 import { UpdateDeliveriesEndDateController } from "./controller/deliverymanController/UpdateDeliveriesEndDateController";
 import { FindAllFinishDeliveriesDeliverymanController } from "./controller/deliverymanController/FindAllFInishDeliveriesController";
+import { FindAllAcceptedDeliveriesController } from "./controller/clientsController/FIndAllAceptedDeliveriesController";
 
 export const routes = Router();
 
@@ -24,6 +25,7 @@ const createClient = new CreateClientController()
 const createDelivery = new CreateDeliveryController()
 const findClientById = new FindClientByIdController()
 const findAllDeliveriesClient = new FindAllDeliveriesCliientController()
+const findAllAcceptedDeliveries = new FindAllAcceptedDeliveriesController()
 
 const createDeliveryman = new CreateDeliverymanController()
 const findAllAvailable = new FindAllAvailableController()
@@ -157,6 +159,12 @@ routes.get(
   "/client/deliveries",
   ensureAuthenticateClient,
   findAllDeliveriesClient.handle
+);
+
+routes.get(
+  "/client/deliveries/accepted",
+  ensureAuthenticateClient,
+  findAllAcceptedDeliveries.handle
 );
 
 

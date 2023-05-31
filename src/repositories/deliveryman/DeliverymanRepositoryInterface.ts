@@ -23,6 +23,8 @@ export interface IDeliverymanRepository {
 
     findAllDeliveries(deliveryman_id: string): Promise<Deliveries[] | undefined>
 
+    findAllFinishDeliveries(deliveryman_id: string): Promise<Deliveries[] | undefined>
+
     updateDeliveriesForDeliveryman({ delivery_id, deliveryman_id }: IUpdateDeliveries): Promise<Deliveries>
 
     updateDeliveriesEndDate({ delivery_id, deliveryman_id }: IUpdateDeliveriesEnd): Promise<Deliveries>

@@ -7,18 +7,19 @@ interface IPayload {
   sub: string;
 }
 
-export async function ensureAuthenticateDeliveryman(request: Request, response: Response, next: NextFunction) {
-
+export async function ensureAuthenticateRestaurant(request: Request, response: Response, next: NextFunction) {
   try {
-    const authHeader = request.headers.authorization;
-
-    if (!authHeader) {
-      throw new TokenMissingException()
-    }
   
-    const [, token] = authHeader.split(" ");
-    const { sub } = verify(token, "bbca61cf2f17de7dfbe347b803122fda") as IPayload;
-    request.id_deliveryman = sub
+  const authHeader = request.headers.authorization;
+
+  if (!authHeader) {
+    throw new TokenMissingException()
+  }
+
+  const [, token] = authHeader.split(" ");
+
+    const { sub } = verify(token, "bbca77cf2f17de7dfbe347b803122fda") as IPayload;
+    request.id_restaurant = sub
     return next()
   } catch (error) {
     if (error instanceof TokenMissingException) {

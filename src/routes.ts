@@ -1,35 +1,47 @@
 import { Router } from "express";
 import { ensureAuthenticateClient } from "./middlewares/ensureAuthenticateClient";
 import { ensureAuthenticateDeliveryman } from "./middlewares/ensureAuthenticateDeliveryman";
-import { AuthenticateClientController } from "./controller/authenticateController/AuthenticateClientController";
-import { AuthenticateDeliverymanController } from "./controller/authenticateController/AuthenticateDeliverymanController";
-import { FindAllDeliveriesCliientController } from "./controller/clientsController/FindAllDeliveriesController";
-import { CreateClientController } from "./controller/clientsController/CreateClientController";
-import { FindClientByIdController } from "./controller/clientsController/FindClientByIdController";
-import { CreateDeliverymanController } from "./controller/deliverymanController/CreateDeliverymanController";
-import { FindAllDeliveriesDeliverymanController } from "./controller/deliverymanController/FindAllDeliveriesController";
-import { FindDeliverymanByIdController } from "./controller/deliverymanController/FindDeliverymanByIdController";
-import { CreateDeliveryController } from "./controller/clientsController/CreateDeliveryController";
-import { FindAllAvailableController } from "./controller/deliverymanController/FindAllAvailableController";
-import { UpdateDeliveriesForDeliverymanController } from "./controller/deliverymanController/UpdateDeliveriesForDeliverymanController";
-import { UpdateDeliveriesEndDateController } from "./controller/deliverymanController/UpdateDeliveriesEndDateController";
+import { AuthenticateClientController } from "./controller/authenticate/AuthenticateClientController";
+import { AuthenticateDeliverymanController } from "./controller/authenticate/AuthenticateDeliverymanController";
+import { FindAllDeliveriesCliientController } from "./controller/clients/FindAllDeliveriesController";
+import { CreateClientController } from "./controller/clients/CreateClientController";
+import { FindClientByIdController } from "./controller/clients/FindClientByIdController";
+import { CreateDeliverymanController } from "./controller/deliveryman/CreateDeliverymanController";
+import { FindAllDeliveriesDeliverymanController } from "./controller/deliveryman/FindAllDeliveriesController";
+import { FindDeliverymanByIdController } from "./controller/deliveryman/FindDeliverymanByIdController";
+import { CreateDeliveryController } from "./controller/clients/CreateDeliveryController";
+import { FindAllAvailableController } from "./controller/deliveryman/FindAllAvailableController";
+import { UpdateDeliveriesForDeliverymanController } from "./controller/deliveryman/UpdateDeliveriesForDeliverymanController";
+import { UpdateDeliveriesEndDateController } from "./controller/deliveryman/UpdateDeliveriesEndDateController";
+import { FindAllFinishDeliveriesDeliverymanController } from "./controller/deliveryman/FindAllFInishDeliveriesController";
+import { FindAllAcceptedDeliveriesController } from "./controller/clients/FIndAllAceptedDeliveriesController";
+import { CreateRestaurantController } from "./controller/restaurant/CreateRestaurantController";
+import { ensureAuthenticateRestaurant } from "./middlewares/ensureAuthenticateRestaurant";
+import { AuthenticateRestaurantController } from "./controller/authenticate/AuthenticateRestaurantController";
+import { CreateItemRestaurantController } from "./controller/restaurant/CreateItemRestaurantController";
 
 export const routes = Router();
 
-const authClientController = new AuthenticateClientController()
-const authDeliverymanController = new AuthenticateDeliverymanController()
+const authClient = new AuthenticateClientController()
+const authDeliveryman = new AuthenticateDeliverymanController()
+const authRestaurant = new AuthenticateRestaurantController()
 
 const createClient = new CreateClientController()
 const createDelivery = new CreateDeliveryController()
 const findClientById = new FindClientByIdController()
 const findAllDeliveriesClient = new FindAllDeliveriesCliientController()
+const findAllAcceptedDeliveries = new FindAllAcceptedDeliveriesController()
 
 const createDeliveryman = new CreateDeliverymanController()
 const findAllAvailable = new FindAllAvailableController()
 const findDeliverymanById = new FindDeliverymanByIdController()
 const findAllDeliveriesDeliveryman = new FindAllDeliveriesDeliverymanController()
+const findALlFinishDeliveriesDeliveryman = new FindAllFinishDeliveriesDeliverymanController()
 const updatdeDeliveriesForDeliveryman = new UpdateDeliveriesForDeliverymanController()
 const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
+
+const createRestaurant = new CreateRestaurantController()
+const createItemRestaurant = new CreateItemRestaurantController()
 
 
 // ========================== Login ========================
@@ -84,7 +96,7 @@ const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
  */
 routes.post(
   "/login/client",
-  authClientController.handle
+  authClient.handle
 );
 
 /**
@@ -138,8 +150,14 @@ routes.post(
  */
 routes.post(
   "/login/deliveryman",
-  authDeliverymanController.handle
+  authDeliveryman.handle
 );
+
+
+routes.post(
+  "/login/restaurant",
+  authRestaurant.handle
+)
 
 
 // ========================== Client ========================
@@ -155,6 +173,12 @@ routes.get(
   "/client/deliveries",
   ensureAuthenticateClient,
   findAllDeliveriesClient.handle
+);
+
+routes.get(
+  "/client/deliveries/accepted",
+  ensureAuthenticateClient,
+  findAllAcceptedDeliveries.handle
 );
 
 
@@ -399,6 +423,13 @@ routes.get(
 );
 
 
+routes.get(
+  "/deliveryman/deliveries/finish",
+  ensureAuthenticateDeliveryman,
+  findALlFinishDeliveriesDeliveryman.handle
+)
+
+
 /**
  * @swagger
  * /deliveryman:
@@ -461,3 +492,17 @@ routes.put(
   ensureAuthenticateDeliveryman,
   updatedDeliveriesEndDate.handle
 );
+
+
+// ========================== Restaurant ========================
+
+routes.post(
+  "/restaurant",
+  createRestaurant.handle
+)
+
+routes.post(
+  "/restaurant/item",
+  ensureAuthenticateRestaurant,
+  createItemRestaurant.handle
+)

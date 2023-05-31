@@ -1,10 +1,21 @@
-import { Clients, Deliveryman } from "@prisma/client";
+import { Clients, Deliveryman, Restaurants } from "@prisma/client";
 import { prisma } from "../../database/prismaClient";
 import { IAuthenticateRepository } from "./AuthenticateRepositoryInterface";
 
 export class AuthenticateRepository implements IAuthenticateRepository {
+    async authenticateRestaurant(username: string): Promise<Restaurants | null> {
+        const restaurant = await prisma.restaurants.findFirst({
+            where:{
+                username:{
+                    equals: username,
+                    mode: "insensitive"
+                }
+            }
+        })
+        return restaurant
+    }
     
-    async authenticateClient(password: string, username: string): Promise<Clients | null> {
+    async authenticateClient(username: string): Promise<Clients | null> {
         const client = await prisma.clients.findFirst({
             where: {
                 username : {
@@ -16,7 +27,7 @@ export class AuthenticateRepository implements IAuthenticateRepository {
         return client
     }
 
-    async authenticateDeliveryman(password: string, username: string): Promise<Deliveryman | null>  {
+    async authenticateDeliveryman(username: string): Promise<Deliveryman | null>  {
         const deliveryman = await prisma.deliveryman.findFirst({
             where: {
                 username : {

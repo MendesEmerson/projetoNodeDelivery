@@ -3,29 +3,29 @@ import { AuthenticateRepository } from "../../repositories/authenticate/Authenti
 import { sign } from "jsonwebtoken";
 import { InvalidDeliverymanLoginException } from "../exceptionsHandler/deliverymanExceptions/InvalidDeliverymanLoginException";
 
-interface IAuthDeliveryman {
+interface IAuthRestaurant{
     username: string
     password: string
 }
 
-export class AuthenticateDeliverymanService {
+export class AuthenticateRestaurantService {
     constructor(private authenticateRepository: AuthenticateRepository) { }
 
-    async execute({ password, username }: IAuthDeliveryman) {
-        const deliveryman = await this.authenticateRepository.authenticateDeliveryman(username)
+    async execute({ password, username }: IAuthRestaurant) {
+        const restaurant = await this.authenticateRepository.authenticateRestaurant(username)
 
-        if (!deliveryman) {
+        if (!restaurant) {
             throw new InvalidDeliverymanLoginException()
         }
 
-        const passwordMatch = await compare(password, deliveryman.password);
+        const passwordMatch = await compare(password, restaurant.password);
 
         if (!passwordMatch) {
             throw new InvalidDeliverymanLoginException()
         }
 
-        const token = sign({ username }, "bbca61cf2f17de7dfbe347b803122fda", {
-            subject: deliveryman.id,
+        const token = sign({ username }, "bbca77cf2f17de7dfbe347b803122fda", {
+            subject: restaurant.id,
             expiresIn: "1d",
         });
 

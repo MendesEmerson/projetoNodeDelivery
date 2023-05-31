@@ -27,6 +27,8 @@ export class CreateRestaurantService {
             password: password_hash,
             username
         })
+
+        console.log(newRestaurant)
         
         return newRestaurant
     }

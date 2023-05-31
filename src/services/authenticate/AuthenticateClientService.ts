@@ -12,7 +12,7 @@ export class AuthenticateClientService {
     constructor(private authenticateRepository: AuthenticateRepository) {}
 
     async execute ({password, username}: IAuthClient) {
-        const client = await this.authenticateRepository.authenticateClient(password, username)
+        const client = await this.authenticateRepository.authenticateClient(username)
 
         if (!client) {
             throw new InvalidClientLoginException()

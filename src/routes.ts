@@ -15,11 +15,16 @@ import { UpdateDeliveriesForDeliverymanController } from "./controller/deliverym
 import { UpdateDeliveriesEndDateController } from "./controller/deliveryman/UpdateDeliveriesEndDateController";
 import { FindAllFinishDeliveriesDeliverymanController } from "./controller/deliveryman/FindAllFInishDeliveriesController";
 import { FindAllAcceptedDeliveriesController } from "./controller/clients/FIndAllAceptedDeliveriesController";
+import { CreateRestaurantController } from "./controller/restaurant/CreateRestaurantController";
+import { ensureAuthenticateRestaurant } from "./middlewares/ensureAuthenticateRestaurant";
+import { AuthenticateRestaurantController } from "./controller/authenticate/AuthenticateRestaurantController";
+import { CreateItemRestaurantController } from "./controller/restaurant/CreateItemRestaurantController";
 
 export const routes = Router();
 
-const authClientController = new AuthenticateClientController()
-const authDeliverymanController = new AuthenticateDeliverymanController()
+const authClient = new AuthenticateClientController()
+const authDeliveryman = new AuthenticateDeliverymanController()
+const authRestaurant = new AuthenticateRestaurantController()
 
 const createClient = new CreateClientController()
 const createDelivery = new CreateDeliveryController()
@@ -34,6 +39,9 @@ const findAllDeliveriesDeliveryman = new FindAllDeliveriesDeliverymanController(
 const findALlFinishDeliveriesDeliveryman = new FindAllFinishDeliveriesDeliverymanController()
 const updatdeDeliveriesForDeliveryman = new UpdateDeliveriesForDeliverymanController()
 const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
+
+const createRestaurant = new CreateRestaurantController()
+const createItemRestaurant = new CreateItemRestaurantController()
 
 
 // ========================== Login ========================
@@ -88,7 +96,7 @@ const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
  */
 routes.post(
   "/login/client",
-  authClientController.handle
+  authClient.handle
 );
 
 /**
@@ -142,8 +150,14 @@ routes.post(
  */
 routes.post(
   "/login/deliveryman",
-  authDeliverymanController.handle
+  authDeliveryman.handle
 );
+
+
+routes.post(
+  "/login/restaurant",
+  authRestaurant.handle
+)
 
 
 // ========================== Client ========================
@@ -478,3 +492,17 @@ routes.put(
   ensureAuthenticateDeliveryman,
   updatedDeliveriesEndDate.handle
 );
+
+
+// ========================== Restaurant ========================
+
+routes.post(
+  "/restaurant",
+  createRestaurant.handle
+)
+
+routes.post(
+  "/restaurant/item",
+  ensureAuthenticateRestaurant,
+  createItemRestaurant.handle
+)

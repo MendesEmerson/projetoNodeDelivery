@@ -1,4 +1,4 @@
-import { UncaughtHandlerException } from './../../services/exceptionsHandler/UncaughtHandlerException';
+import { UncaughtHandlerException } from '../../services/exceptionsHandler/UncaughtHandlerException';
 import { Request, Response } from "express";
 import { AuthenticateRepository } from "../../repositories/authenticate/AuthenticateRepository";
 import { AuthenticateClientService } from "../../services/authenticate/AuthenticateClientService";

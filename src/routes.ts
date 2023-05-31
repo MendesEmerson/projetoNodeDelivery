@@ -1,20 +1,20 @@
 import { Router } from "express";
 import { ensureAuthenticateClient } from "./middlewares/ensureAuthenticateClient";
 import { ensureAuthenticateDeliveryman } from "./middlewares/ensureAuthenticateDeliveryman";
-import { AuthenticateClientController } from "./controller/authenticateController/AuthenticateClientController";
-import { AuthenticateDeliverymanController } from "./controller/authenticateController/AuthenticateDeliverymanController";
-import { FindAllDeliveriesCliientController } from "./controller/clientsController/FindAllDeliveriesController";
-import { CreateClientController } from "./controller/clientsController/CreateClientController";
-import { FindClientByIdController } from "./controller/clientsController/FindClientByIdController";
-import { CreateDeliverymanController } from "./controller/deliverymanController/CreateDeliverymanController";
-import { FindAllDeliveriesDeliverymanController } from "./controller/deliverymanController/FindAllDeliveriesController";
-import { FindDeliverymanByIdController } from "./controller/deliverymanController/FindDeliverymanByIdController";
-import { CreateDeliveryController } from "./controller/clientsController/CreateDeliveryController";
-import { FindAllAvailableController } from "./controller/deliverymanController/FindAllAvailableController";
-import { UpdateDeliveriesForDeliverymanController } from "./controller/deliverymanController/UpdateDeliveriesForDeliverymanController";
-import { UpdateDeliveriesEndDateController } from "./controller/deliverymanController/UpdateDeliveriesEndDateController";
-import { FindAllFinishDeliveriesDeliverymanController } from "./controller/deliverymanController/FindAllFInishDeliveriesController";
-import { FindAllAcceptedDeliveriesController } from "./controller/clientsController/FIndAllAceptedDeliveriesController";
+import { AuthenticateClientController } from "./controller/authenticate/AuthenticateClientController";
+import { AuthenticateDeliverymanController } from "./controller/authenticate/AuthenticateDeliverymanController";
+import { FindAllDeliveriesCliientController } from "./controller/clients/FindAllDeliveriesController";
+import { CreateClientController } from "./controller/clients/CreateClientController";
+import { FindClientByIdController } from "./controller/clients/FindClientByIdController";
+import { CreateDeliverymanController } from "./controller/deliveryman/CreateDeliverymanController";
+import { FindAllDeliveriesDeliverymanController } from "./controller/deliveryman/FindAllDeliveriesController";
+import { FindDeliverymanByIdController } from "./controller/deliveryman/FindDeliverymanByIdController";
+import { CreateDeliveryController } from "./controller/clients/CreateDeliveryController";
+import { FindAllAvailableController } from "./controller/deliveryman/FindAllAvailableController";
+import { UpdateDeliveriesForDeliverymanController } from "./controller/deliveryman/UpdateDeliveriesForDeliverymanController";
+import { UpdateDeliveriesEndDateController } from "./controller/deliveryman/UpdateDeliveriesEndDateController";
+import { FindAllFinishDeliveriesDeliverymanController } from "./controller/deliveryman/FindAllFInishDeliveriesController";
+import { FindAllAcceptedDeliveriesController } from "./controller/clients/FIndAllAceptedDeliveriesController";
 
 export const routes = Router();
 

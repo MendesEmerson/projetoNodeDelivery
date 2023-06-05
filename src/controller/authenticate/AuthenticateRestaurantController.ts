@@ -4,6 +4,7 @@ import { AuthenticateRepository } from "../../repositories/authenticate/Authenti
 import { AuthenticateClientService } from "../../services/authenticate/AuthenticateClientService";
 import { InvalidClientLoginException } from "../../services/exceptionsHandler/clientsExceptions/InvalidClientLoginException";
 import { AuthenticateRestaurantService } from '../../services/authenticate/AuthenticateRestaurantService';
+import { InvalidRestaurantLoginException } from '../../services/exceptionsHandler/restaurantExceptions/RestaurantInvalidLoginException';
 
 export class AuthenticateRestaurantController {
     async handle(request: Request, response: Response) {
@@ -14,7 +15,7 @@ export class AuthenticateRestaurantController {
 
         try {
             if(!username || !password) {
-                throw new InvalidClientLoginException()
+                throw new InvalidRestaurantLoginException()
             }
 
             const auth = await authRestaurantService.execute({
@@ -25,7 +26,7 @@ export class AuthenticateRestaurantController {
             return response.status(200).json(auth)
 
         } catch (error) {
-            if(error instanceof InvalidClientLoginException) {
+            if(error instanceof InvalidRestaurantLoginException) {
                 return response.status(error.status).json(error)
             }
             const uncaughtHandlerException = new UncaughtHandlerException()

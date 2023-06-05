@@ -29,6 +29,6 @@ export class AuthenticateDeliverymanService {
             expiresIn: "1d",
         });
 
-        return token;
+        return { token, deliveryman };
     }
 }

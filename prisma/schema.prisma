@@ -18,21 +18,23 @@ model Deliveryman {
 }
 
 model Clients {
-  id         String       @id @default(uuid())
-  name       String
-  username   String       @unique
-  password   String
-  deliveries Deliveries[]
+  id          String       @id @default(uuid())
+  accountType String       @default("Clients")
+  name        String
+  username    String       @unique
+  password    String
+  deliveries  Deliveries[]
 
   @@map("clients")
 }
 
 model Restaurants {
-  id       String  @id @default(uuid())
-  name     String
-  username String  @unique
-  password String
-  items    Items[]
+  id          String  @id @default(uuid())
+  accountType String  @default("Restaurants")
+  name        String
+  username    String  @unique
+  password    String
+  items       Items[]
 
   @@map("restaurants")
 }
@@ -41,6 +43,8 @@ model Items {
   id            String       @id @default(uuid())
   item_name     String
   category      String
+  description   String
+  price         Float
   Restaurants   Restaurants? @relation(fields: [restaurantsId], references: [id])
   restaurantsId String?
 
@@ -49,6 +53,7 @@ model Items {
 
 model Deliveries {
   id             String       @id @default(uuid())
+  accountType    String       @default("Deliveryman")
   id_client      String
   client         Clients      @relation(fields: [id_client], references: [id])
   id_deliveryman String?

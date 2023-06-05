@@ -11,24 +11,26 @@ export class CreateItemRestaurantController {
         const createItemRestaurantService = new CreateItemRestaurantService(restaurantRepository)
 
         const { id_restaurant } = request
-        const { category, item_name } = request.body
+        const { category, item_name, description, price } = request.body
 
         try {
-            if(!category || !item_name){
+            if (!category || !item_name || !description || !price) {
                 throw new InvalidCreateTypeException()
             }
 
             const newItem = createItemRestaurantService.execute({
                 category,
                 item_name,
+                description,
+                price,
                 restaurant_id: id_restaurant
             })
 
             return response.status(201).json(newItem)
         } catch (error) {
-            if(error instanceof RestaurantNotFoundException){
+            if (error instanceof RestaurantNotFoundException) {
                 return response.status(error.status).json(error)
-            }else if(error instanceof InvalidCreateTypeException){
+            } else if (error instanceof InvalidCreateTypeException) {
                 return response.status(error.status).json(error)
             }
             const uncaughtHandlerException = new UncaughtHandlerException()

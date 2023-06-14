@@ -9,14 +9,14 @@ interface IPayload {
 
 export async function ensureAuthenticateClient(request: Request, response: Response, next: NextFunction) {
   try {
-  
-  const authHeader = request.headers.authorization;
 
-  if (!authHeader) {
-    throw new TokenMissingException()
-  }
+    const authHeader = request.headers.authorization;
 
-  const [, token] = authHeader.split(" ");
+    if (!authHeader) {
+      throw new TokenMissingException()
+    }
+
+    const [, token] = authHeader.split(" ");
 
     const { sub } = verify(token, "bbca61cf2f25de7dfbe347b803122fda") as IPayload;
     request.id_client = sub
@@ -25,7 +25,7 @@ export async function ensureAuthenticateClient(request: Request, response: Respo
     if (error instanceof TokenMissingException) {
       return response.status(error.status).json(error)
     }
-      const invalidToken = new InvalidTokenException()
-      return response.status(invalidToken.status).json(invalidToken)
+    const invalidToken = new InvalidTokenException()
+    return response.status(invalidToken.status).json(invalidToken)
   }
 }

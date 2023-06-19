@@ -17,8 +17,6 @@ export class FindAllAcceptedDeliveriesController {
             }
             const clientDeliveries = await findAllAcceptedDeliveries.execute(id_client)
 
-            console.log(clientDeliveries)
-
             return response.status(200).json(clientDeliveries)
 
         } catch (error) {

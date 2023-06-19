@@ -1,4 +1,5 @@
-import { Clients, Deliveries, Prisma } from "@prisma/client";
+import { Cart, Clients, Deliveries, Items, Prisma } from "@prisma/client";
+
 
 export interface IClientsRepository {
     createClient({ password, username }: Prisma.ClientsCreateInput): Promise<Clients>
@@ -12,6 +13,5 @@ export interface IClientsRepository {
     findAllDeliveries(client_id: string): Promise<Deliveries[] | undefined>
 
     findAllAcceptedDeliveries(client_id: string): Promise<Deliveries[] | undefined>
-
 
 }

@@ -1,8 +1,9 @@
-import { Prisma, Clients, Deliveries } from "@prisma/client";
+import { Prisma, Clients, Deliveries, Cart, Items } from "@prisma/client";
 import { IClientsRepository } from "./ClientsRepositoryInterface";
 import { prisma } from "../../database/prismaClient";
 
 export class ClientsRepository implements IClientsRepository {
+
     async findAllAcceptedDeliveries(client_id: string): Promise<Deliveries[] | undefined> {
         const deliveries = await prisma.deliveries.findMany({
             where: {
@@ -52,10 +53,13 @@ export class ClientsRepository implements IClientsRepository {
         const client = await prisma.clients.findUnique({
             where: {
                 id: client_id
+            },
+            include: {
+                cart: true
             }
-        })
+        });
 
-        return client
+        return client;
     }
 
     async findAllDeliveries(client_id: string): Promise<Deliveries[] | undefined> {

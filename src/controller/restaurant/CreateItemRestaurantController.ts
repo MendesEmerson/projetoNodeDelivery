@@ -18,7 +18,7 @@ export class CreateItemRestaurantController {
                 throw new InvalidCreateTypeException()
             }
 
-            const newItem = createItemRestaurantService.execute({
+            const newItem = await createItemRestaurantService.execute({
                 category,
                 item_name,
                 description,

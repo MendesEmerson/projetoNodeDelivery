@@ -14,6 +14,6 @@ export class FindAllItensRestaurantService {
 
         const restaurantItens = await this.restaurantRepository.findAllItensRestaurant(restaurant_id)
 
-        return restaurantItens
+        return {restaurant, restaurantItens}
     }
 }

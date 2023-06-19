@@ -25,6 +25,7 @@ model Clients {
   username    String       @unique
   password    String
   deliveries  Deliveries[]
+  cart        Cart[]
 
   @@map("clients")
 }
@@ -33,6 +34,8 @@ model Restaurants {
   id          String  @id @default(uuid())
   accountType String  @default("Restaurants")
   name        String
+  description String
+  isOpen      Boolean @default(false)
   username    String  @unique
   password    String
   items       Items[]
@@ -48,6 +51,8 @@ model Items {
   price         Float
   Restaurants   Restaurants? @relation(fields: [restaurantsId], references: [id], onDelete: Cascade)
   restaurantsId String?
+  Cart          Cart?        @relation(fields: [cartId], references: [id])
+  cartId        String?
 
   @@map("items")
 }
@@ -64,4 +69,14 @@ model Deliveries {
   end_at     String?
 
   @@map("deliveries")
+}
+
+model Cart {
+  id String @id @default(uuid())
+
+  value     Float
+  items     Items[]
+  finish    Boolean @default(false)
+  client    Clients @relation(fields: [clientsId], references: [id], onDelete: Cascade)
+  clientsId String
 }

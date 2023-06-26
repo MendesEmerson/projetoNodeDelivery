@@ -6,6 +6,7 @@ import { RestaurantRepository } from "../../repositories/restaurant/RestaurantRe
 import { ClientNotFoundException } from "../../services/exceptionsHandler/clientsExceptions/ClientNotFoundException";
 import { UncaughtHandlerException } from "../../services/exceptionsHandler/UncaughtHandlerException";
 import { ItemNotFoundException } from "../../services/exceptionsHandler/itemsExceptions/ItemNotFoundException";
+import { ItemAlreadyExistException } from "../../services/exceptionsHandler/itemsExceptions/itemAlreadyExistException";
 
 export class AddItemToCartController {
     async handle(request: Request, response: Response) {
@@ -27,6 +28,8 @@ export class AddItemToCartController {
             if (error instanceof ClientNotFoundException) {
                 response.status(error.status).json(error)
             } else if (error instanceof ItemNotFoundException) {
+                response.status(error.status).json(error)
+            } else if (error instanceof ItemAlreadyExistException) {
                 response.status(error.status).json(error)
             } else {
                 const uncaughtHandlerException = new UncaughtHandlerException()

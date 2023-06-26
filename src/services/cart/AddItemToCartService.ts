@@ -3,6 +3,7 @@ import { ClientsRepository } from "../../repositories/clients/ClientsRepository"
 import { RestaurantRepository } from "../../repositories/restaurant/RestaurantRepository";
 import { ClientNotFoundException } from "../exceptionsHandler/clientsExceptions/ClientNotFoundException";
 import { ItemNotFoundException } from "../exceptionsHandler/itemsExceptions/ItemNotFoundException";
+import { ItemAlreadyExistException } from "../exceptionsHandler/itemsExceptions/itemAlreadyExistException";
 
 interface IAddItemCart {
     client_id: string
@@ -32,6 +33,10 @@ export class AddItemToCartService {
         const cart = await this.cartRepository.findCartOpen(client.id)
 
         if (cart) {
+            const itemExistInCart = cart.items.some((itemCart) => itemCart.id === item.id)
+            if (itemExistInCart) {
+                throw new ItemAlreadyExistException()
+            }
             const updateCart = await this.cartRepository.updateCart(
                 cart.id,
                 {

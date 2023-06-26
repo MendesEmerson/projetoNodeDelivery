@@ -2,39 +2,48 @@ import { Deliveries } from '@prisma/client';
 import { format } from "date-fns";
 import { ClientsRepository } from "../../repositories/clients/ClientsRepository";
 import { ClientNotFoundException } from "../exceptionsHandler/clientsExceptions/ClientNotFoundException";
+import { CartRepository } from '../../repositories/cart/CartRepository';
 
 interface ICreateDelivery {
-    item_name: string;
     id_client: string;
-  }
+}
 
 export class CreateDeliveriesService {
-    constructor(private clientsRepository: ClientsRepository) { }
+    constructor(private clientsRepository: ClientsRepository, private cartRepository: CartRepository) { }
 
-    async execute({id_client, item_name}: ICreateDelivery) {
+    async execute({ id_client }: ICreateDelivery) {
         const currentDate = new Date();
         const formattedDate = format(currentDate, "dd/MM/yyyy HH:mm");
         const client = await this.clientsRepository.findClientById(id_client)
-        const clientName = await this.clientsRepository.findClientById(id_client)
-       
-        if(!client) {
+        const cart = await this.cartRepository.findCartOpen(id_client)
+
+        if (!client) {
             throw new ClientNotFoundException()
         }
 
+        if (!cart) {
+            throw new Error("Criar erro para carrinho inexistente")
+        }
+
+        const closeCart = await this.cartRepository.updateCart(
+            cart.id,
+            { finish: true }
+        )
+
         const createDelivery = await this.clientsRepository.createDelivery({
             client: {
-                connect: {id: client.id},
-                
+                connect: { id: client.id },
             },
-            
             created_at: formattedDate,
-            item_name,
-            
+            cart: {
+                connect: { id: closeCart.id }
+            }
+
         })
-        
 
 
-        return {delivery: createDelivery, client: client}
+
+        return { delivery: createDelivery, client: client }
 
     }
 

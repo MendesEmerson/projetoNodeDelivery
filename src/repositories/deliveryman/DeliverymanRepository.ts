@@ -100,13 +100,9 @@ export class DeliverymanRepository implements IDeliverymanRepository {
         })
         return deliveryman
     }
-    async createDeliveryman({ password, username, name }: Prisma.DeliverymanCreateInput): Promise<Deliveryman | null> {
+    async createDeliveryman(data: Prisma.DeliverymanCreateInput): Promise<Deliveryman | null> {
         const createDeliveryman = await prisma.deliveryman.create({
-            data: {
-                password,
-                username,
-                name
-            }
+            data
         })
         return createDeliveryman
     }

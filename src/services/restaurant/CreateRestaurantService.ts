@@ -4,6 +4,7 @@ import { RestaurantAlreadyExistException } from "../exceptionsHandler/restaurant
 
 interface ICreateRestaurant {
     name: string
+    description: string
     username: string
     password: string
 }
@@ -11,7 +12,7 @@ interface ICreateRestaurant {
 export class CreateRestaurantService {
     constructor(private restaurantRepository: RestaurantRepository) { }
 
-    async execute({ name, password, username }: ICreateRestaurant) {
+    async execute({ name, password, username, description }: ICreateRestaurant) {
 
 
         const existRestaurant = await this.restaurantRepository.findRestaurantByUsername(username)
@@ -25,7 +26,8 @@ export class CreateRestaurantService {
         const newRestaurant = await this.restaurantRepository.createRestaurant({
             name,
             password: password_hash,
-            username
+            username,
+            description,
         })
 
         console.log(newRestaurant)

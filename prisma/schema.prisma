@@ -8,31 +8,37 @@ datasource db {
 }
 
 model Deliveryman {
-  id         String       @id @default(uuid())
-  name       String
-  username   String       @unique
-  password   String
-  deliveries Deliveries[]
+  id          String       @id @default(uuid())
+  accountType String       @default("Deliverymans")
+  name        String
+  username    String       @unique
+  password    String
+  deliveries  Deliveries[]
 
   @@map("deliveryman")
 }
 
 model Clients {
-  id         String       @id @default(uuid())
-  name       String
-  username   String       @unique
-  password   String
-  deliveries Deliveries[]
+  id          String       @id @default(uuid())
+  accountType String       @default("Clients")
+  name        String
+  username    String       @unique
+  password    String
+  deliveries  Deliveries[]
+  cart        Cart[]
 
   @@map("clients")
 }
 
 model Restaurants {
-  id       String  @id @default(uuid())
-  name     String
-  username String  @unique
-  password String
-  items    Items[]
+  id          String  @id @default(uuid())
+  accountType String  @default("Restaurants")
+  name        String
+  description String
+  isOpen      Boolean @default(false)
+  username    String  @unique
+  password    String
+  items       Items[]
 
   @@map("restaurants")
 }
@@ -41,8 +47,12 @@ model Items {
   id            String       @id @default(uuid())
   item_name     String
   category      String
-  Restaurants   Restaurants? @relation(fields: [restaurantsId], references: [id])
+  description   String
+  price         Float
+  Restaurants   Restaurants? @relation(fields: [restaurantsId], references: [id], onDelete: Cascade)
   restaurantsId String?
+  Cart          Cart[]
+  cartId        String?
 
   @@map("items")
 }
@@ -50,13 +60,24 @@ model Items {
 model Deliveries {
   id             String       @id @default(uuid())
   id_client      String
-  client         Clients      @relation(fields: [id_client], references: [id])
+  client         Clients      @relation(fields: [id_client], references: [id], onDelete: Cascade)
   id_deliveryman String?
-  deliveryman    Deliveryman? @relation(fields: [id_deliveryman], references: [id])
-
-  item_name  String
-  created_at String
-  end_at     String?
+  deliveryman    Deliveryman? @relation(fields: [id_deliveryman], references: [id], onDelete: Cascade)
+  created_at     String
+  end_at         String?
+  cart           Cart?        @relation(fields: [cartId], references: [id])
+  cartId         String?      @unique
 
   @@map("deliveries")
+}
+
+model Cart {
+  id String @id @default(uuid())
+
+  value      Float
+  items      Items[]
+  finish     Boolean     @default(false)
+  client     Clients     @relation(fields: [clientsId], references: [id], onDelete: Cascade)
+  clientsId  String
+  Deliveries Deliveries?
 }

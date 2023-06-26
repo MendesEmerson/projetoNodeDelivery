@@ -19,6 +19,11 @@ import { CreateRestaurantController } from "./controller/restaurant/CreateRestau
 import { ensureAuthenticateRestaurant } from "./middlewares/ensureAuthenticateRestaurant";
 import { AuthenticateRestaurantController } from "./controller/authenticate/AuthenticateRestaurantController";
 import { CreateItemRestaurantController } from "./controller/restaurant/CreateItemRestaurantController";
+import { FindAllItensRestaurantController } from "./controller/restaurant/FindAllItensRestaurantController";
+import { AddItemToCartController } from "./controller/cart/AddItemToCartController";
+import { DeleteItemToCartController } from "./controller/cart/DeleteItemToCartController";
+import { FindAllRestaurantController } from "./controller/restaurant/FindAllRestaurantsController";
+import { FindOpenCartController } from "./controller/cart/FindOpenCartController";
 
 export const routes = Router();
 
@@ -42,6 +47,12 @@ const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
 
 const createRestaurant = new CreateRestaurantController()
 const createItemRestaurant = new CreateItemRestaurantController()
+const findAllItensRestaurant = new FindAllItensRestaurantController()
+const findAllRestaurantsOpen = new FindAllRestaurantController()
+
+const findOpenCart = new FindOpenCartController()
+const addItemToCart = new AddItemToCartController()
+const deleteItemToCart = new DeleteItemToCartController()
 
 
 // ========================== Login ========================
@@ -182,6 +193,12 @@ routes.get(
 );
 
 
+routes.get(
+  "/client/cart/open",
+  ensureAuthenticateClient,
+  findOpenCart.handle
+)
+
 /**
  * @swagger
  * /client:
@@ -239,6 +256,18 @@ routes.post(
   ensureAuthenticateClient,
   createDelivery.handle
 );
+
+routes.post(
+  "/client/cart/additem/:item_id",
+  ensureAuthenticateClient,
+  addItemToCart.handle
+)
+
+routes.delete(
+  "/client/cart/deleteitem/:item_id",
+  ensureAuthenticateClient,
+  deleteItemToCart.handle
+)
 
 // ========================== Deliveryman ========================
 routes.get(
@@ -495,6 +524,16 @@ routes.put(
 
 
 // ========================== Restaurant ========================
+
+routes.get(
+  "/restaurant/:restaurant_id",
+  findAllItensRestaurant.handle
+)
+
+routes.get(
+  "/restaurants",
+  findAllRestaurantsOpen.handle
+)
 
 routes.post(
   "/restaurant",

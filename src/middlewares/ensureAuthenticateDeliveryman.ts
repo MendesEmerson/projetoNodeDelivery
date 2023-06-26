@@ -8,7 +8,7 @@ interface IPayload {
 }
 
 export async function ensureAuthenticateDeliveryman(request: Request, response: Response, next: NextFunction) {
-
+ 
   try {
     const authHeader = request.headers.authorization;
 

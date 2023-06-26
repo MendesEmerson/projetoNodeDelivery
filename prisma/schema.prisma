@@ -51,7 +51,7 @@ model Items {
   price         Float
   Restaurants   Restaurants? @relation(fields: [restaurantsId], references: [id], onDelete: Cascade)
   restaurantsId String?
-  Cart          Cart?        @relation(fields: [cartId], references: [id])
+  Cart          Cart[]
   cartId        String?
 
   @@map("items")
@@ -63,10 +63,10 @@ model Deliveries {
   client         Clients      @relation(fields: [id_client], references: [id], onDelete: Cascade)
   id_deliveryman String?
   deliveryman    Deliveryman? @relation(fields: [id_deliveryman], references: [id], onDelete: Cascade)
-
-  item_name  String
-  created_at String
-  end_at     String?
+  created_at     String
+  end_at         String?
+  cart           Cart?        @relation(fields: [cartId], references: [id])
+  cartId         String?      @unique
 
   @@map("deliveries")
 }
@@ -74,9 +74,10 @@ model Deliveries {
 model Cart {
   id String @id @default(uuid())
 
-  value     Float
-  items     Items[]
-  finish    Boolean @default(false)
-  client    Clients @relation(fields: [clientsId], references: [id], onDelete: Cascade)
-  clientsId String
+  value      Float
+  items      Items[]
+  finish     Boolean     @default(false)
+  client     Clients     @relation(fields: [clientsId], references: [id], onDelete: Cascade)
+  clientsId  String
+  Deliveries Deliveries?
 }

@@ -23,6 +23,7 @@ import { FindAllItensRestaurantController } from "./controller/restaurant/FindAl
 import { AddItemToCartController } from "./controller/cart/AddItemToCartController";
 import { DeleteItemToCartController } from "./controller/cart/DeleteItemToCartController";
 import { FindAllRestaurantController } from "./controller/restaurant/FindAllRestaurantsController";
+import { FindOpenCartController } from "./controller/cart/FindOpenCartController";
 
 export const routes = Router();
 
@@ -48,6 +49,8 @@ const createRestaurant = new CreateRestaurantController()
 const createItemRestaurant = new CreateItemRestaurantController()
 const findAllItensRestaurant = new FindAllItensRestaurantController()
 const findAllRestaurantsOpen = new FindAllRestaurantController()
+
+const findOpenCart = new FindOpenCartController()
 const addItemToCart = new AddItemToCartController()
 const deleteItemToCart = new DeleteItemToCartController()
 
@@ -189,6 +192,12 @@ routes.get(
   findAllAcceptedDeliveries.handle
 );
 
+
+routes.get(
+  "/client/cart/open",
+  ensureAuthenticateClient,
+  findOpenCart.handle
+)
 
 /**
  * @swagger

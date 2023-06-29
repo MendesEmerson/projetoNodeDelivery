@@ -7,6 +7,7 @@ interface ICreateRestaurant {
     description: string
     username: string
     password: string
+    description: string
 }
 
 export class CreateRestaurantService {
@@ -25,6 +26,7 @@ export class CreateRestaurantService {
 
         const newRestaurant = await this.restaurantRepository.createRestaurant({
             name,
+            description,
             password: password_hash,
             username,
             description,

@@ -3,29 +3,6 @@ import { IRestaurantRepository } from "./RestaurantRepositoryInteface";
 import { prisma } from "../../database/prismaClient";
 
 export class RestaurantRepository implements IRestaurantRepository {
-    
-    async findAllRestaurants(): Promise<Restaurants[] | null> {
-        const restaurants = await prisma.restaurants.findMany({
-            where: {
-                isOpen: true
-            }
-        })
-        return restaurants
-    }
-
-
-    async findItemById(item_id: string): Promise<Items | null> {
-        const item = await prisma.items.findUnique({
-            where: {
-                id: item_id
-            },
-            include: {
-                Restaurants: true
-            }
-        })
-        return item
-    }
-
     async findAllItensRestaurant(restaurant_id: string): Promise<Items[]> {
         const restaurant = await prisma.items.findMany({
             where: {

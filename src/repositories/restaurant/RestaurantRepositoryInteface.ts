@@ -6,6 +6,7 @@ export interface IRestaurantRepository {
     findAllRestaurants(): Promise<Restaurants[] | null>
     findRestaurantById(restaurant_id: string): Promise<Restaurants | null>
     findRestaurantByUsername(username: string): Promise<Restaurants | null>
+    updateRestaurantById(restaurant_id: string, data: Prisma.RestaurantsUpdateInput): Promise<Restaurants>
     createRestaurant(data: Prisma.RestaurantsCreateInput): Promise<Restaurants>
     createItem(data: Prisma.ItemsCreateInput): Promise<Items>
 }

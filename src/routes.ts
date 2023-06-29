@@ -24,6 +24,8 @@ import { AddItemToCartController } from "./controller/cart/AddItemToCartControll
 import { DeleteItemToCartController } from "./controller/cart/DeleteItemToCartController";
 import { FindAllRestaurantController } from "./controller/restaurant/FindAllRestaurantsController";
 import { FindOpenCartController } from "./controller/cart/FindOpenCartController";
+import { OpenOrCloseRestaurantController } from "./controller/restaurant/OpenOrCloseRestaurantController";
+
 
 export const routes = Router();
 
@@ -47,6 +49,7 @@ const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
 
 const createRestaurant = new CreateRestaurantController()
 const createItemRestaurant = new CreateItemRestaurantController()
+const openOrCloseRestaurant = new OpenOrCloseRestaurantController()
 const findAllItensRestaurant = new FindAllItensRestaurantController()
 const findAllRestaurantsOpen = new FindAllRestaurantController()
 
@@ -538,6 +541,12 @@ routes.get(
 routes.post(
   "/restaurant",
   createRestaurant.handle
+)
+
+routes.post(
+  "/restaurant/:restaurant_id/openorclose",
+  ensureAuthenticateRestaurant,
+  openOrCloseRestaurant.handle
 )
 
 routes.post(

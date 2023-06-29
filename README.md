@@ -1,5 +1,7 @@
 # Node Delivery 
-#### Projeto que possibilita a criação de usuários e entregadores, estabelece a conexão entre eles via app. onde é possivel que os Clientes façam pedidos e os intregadores possam visualizar itens disponiveis para entregar.
+#### Projeto que possibilita a criação de usuários e entregadores, estabelece a conexão entre eles via app. onde é possivel que os Clientes façam pedidos e os entregadores possam visualizar itens disponíveis para entregar.
+
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
 ## Tecnologias Utilizadas
 <a href="https://nodejs.org/en/download" title="Node">
@@ -23,60 +25,74 @@
 <a href="https://www.postgresql.org/" title="PostgresSQL">
   <img src="https://img.icons8.com/?size=48&id=38561&format=png" alt="PostgresSQL">
 </a>
+<a href="https://swagger.io/tools/swagger-ui/" title="Swagger">
+  <img src="https://img.icons8.com/?size=48&id=rdKV2dee9wxd&format=svg" alt="Swagger">
+</a>
+<a href="https://docs.docker.com/" title="Docker">
+  <img src="https://img.icons8.com/?size=48&id=22797&format=svg" alt="Docker">
+</a>
+<a href="https://www.postman.com/" title="Postman">
+  <img src="https://img.icons8.com/?size=48&id=EPbEfEa7o8CB&format=svg" alt="Postman">
+</a>
 
 
 ## Preparando ambiente de desenvolvimento
-#### instale as dependencias de desenvolvimento: 
-##### TypeScript;
-##### Ts-node-dev;
-##### Prisma;
-##### Types/express;
-##### Types/jsonwebtoken;
-##### Types/bcrypt;
+Baixe as dependênias com o comando npm i ou npm install.
 
-## Utilizando a Api
+## Utilizando a API
 ##### Acesse a aplicação em http://localhost:3001.
+##### Acesse a documentação com Swagger em http://localhost:3001/api-docs.
 
-#### End-points
 
-**Campos obrigatórios para criação do cliente/entregador. username/password**
-**Campos obrigatórios para criar um novo item. item_name** 
+## 
+### **Cliente** 
 
-=========================== **Cliente** ===========================
+**POST:** /client -> Acessando a API atraves do metodo POST com a url /client você poderá criar um novo usuario "Cliente". <br/>
 
-**POST:** /client -> Acessando a API atraves do metodo post com a url /client você poderá criar um novo usuario "Cliente". <br/>
+**POST:** /login/client -> Acessando a API atraves do metodo POST com a url /login/client, passando username e password você poderá logar como cliente e receber um token de autenticação. <br/>
 
-**POST:** /login/client -> Acessando a API atraves do metodo post com a url /login/client, passando username e password você poderá logar como cliente e receber um token de autenticação. <br/>
+**GET:** /client -> Acessando a API atraves do metodo GET com a url /client retornara as informações do cliente que estiver logado e autenticado.<br/>
 
-**GET:** /client -> Acessando a API atraves do metodo post com a url /client retornara as informações do cliente que estiver logado e autenticado.<br/>
+**GET:** /client/deliveries -> Acessando a API atraves do metodo GET com a url /client/deliveries retornara todos os pedidos feitos pelo cliente.
 
-**GET:** /client/deliveries -> Acessando a API atraves do metodo post com a url /client/deliveries retornara todos os pedidos feitos pelo cliente.
-
-**POST:** /delivery -> Acessando a API atraves do metodo post com a url /delivery o cliente poderar criar um novo item para ser entregue. <br/>
+**POST:** /delivery -> Acessando a API atraves do metodo POST com a url /delivery o cliente poderar criar um novo item para ser entregue. <br/>
 
 
 
+## 
+### **Entregador** 
 
-=========================== **Entregador** ===========================
+**POST:** /deliveryman -> Acessando a API atraves do metodo POST com a url /deliveryman você poderá criar um novo usuario. "Entregador". <br/>
 
-**POST:** /deliveryman -> Acessando a API atraves do metodo post com a url /deliveryman você poderá criar um novo usuario. "Entregador". <br/>
+**POST:** /login/deliveryman -> Acessando a API atraves do metodo POST com a url /login/deliveryman, passando username e password  você poderá logar como entregador e receber um token de autenticação. <br/>
 
-**POST:** /login/deliveryman -> Acessando a API atraves do metodo post com a url /login/deliveryman, passando username e password  você poderá logar como entregador e receber um token de autenticação. <br/>
+**GET:** /deliveryman -> Acessando a API atraves do metodo GET com a url /deliveryman retornara as informações do entregador que estiver logado e autenticado.<br/>
 
-**GET:** /deliveryman -> Acessando a API atraves do metodo post com a url /deliveryman retornara as informações do entregador que estiver logado e autenticado.<br/>
+**GET:** /deliveryman/deliveries -> Acessando a API atraves do metodo GET com a url /deliveryman/deliveries retornara todos os pedidos aceitos pelo entregador.
 
-**GET:** /deliveryman/deliveries -> Acessando a API atraves do metodo post com a url /deliveryman/deliveries retornara todos os pedidos aceitos pelo entregador.
+**GET:** /delivery/available -> Acessando a API atraves do metodo GET com a url /delivery/available retornara todos os pedidos disponiveis para serem aceitos.
 
-**GET:** /delivery/available -> Acessando a API atraves do metodo post com a url /delivery/available retornara todos os pedidos disponiveis para serem aceitos.
+**POST:** /delivery/updateDeliveryman/id -> Acessando a API atraves do metodo POST com a url /delivery/updateDeliveryman/id, o entregador poderar aceitar uma entrega que esta disponivel na lista de pedidos. <br/>
 
-**POST:** /delivery/updateDeliveryman/id -> Acessando a API atraves do metodo post com a url /delivery/updateDeliveryman/id, o entregador poderar aceitar uma entrega que esta disponivel na lista de pedidos. <br/>
-
-**POST:** /delivery/updateEndDate/id -> Acessando a API atraves do metodo post com a url /delivery/updateEndDate/id , o entregador finalizará a entrega que aceitou anteriormente. <br/>
+**POST:** /delivery/updateEndDate/id -> Acessando a API atraves do metodo POST com a url /delivery/updateEndDate/id , o entregador finalizará a entrega que aceitou anteriormente. <br/>
 
 ## Proximas implementações
-#### Criar funcionalidade para cadastrar restaurantes
 #### Criar funcionalidade para que cada restaurante cadastre seus itens
 
+
+## Modelo do Banco
+
+  <img src="https://i.pinimg.com/564x/0f/d4/f1/0fd4f1cb16ded33c582002031ad2a8f6.jpg" alt="diagrama">
+
+     
+## Contato dos Desenvolvedores
+
+<a href="https://github.com/mendesemerson">
+  <img src="https://avatars.githubusercontent.com/u/97401294?v=4" width="150">
+</a>
+<a href="https://github.com/juancassiano">
+  <img src="https://avatars.githubusercontent.com/u/59894338?v=4" width="150">
+</a>
 
 
 

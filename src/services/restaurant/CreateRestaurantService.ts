@@ -6,12 +6,13 @@ interface ICreateRestaurant {
     name: string
     username: string
     password: string
+    description: string
 }
 
 export class CreateRestaurantService {
     constructor(private restaurantRepository: RestaurantRepository) { }
 
-    async execute({ name, password, username }: ICreateRestaurant) {
+    async execute({ name, password, username, description }: ICreateRestaurant) {
 
 
         const existRestaurant = await this.restaurantRepository.findRestaurantByUsername(username)
@@ -24,6 +25,7 @@ export class CreateRestaurantService {
 
         const newRestaurant = await this.restaurantRepository.createRestaurant({
             name,
+            description,
             password: password_hash,
             username
         })

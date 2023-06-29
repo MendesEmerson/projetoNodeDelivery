@@ -20,6 +20,7 @@ import { ensureAuthenticateRestaurant } from "./middlewares/ensureAuthenticateRe
 import { AuthenticateRestaurantController } from "./controller/authenticate/AuthenticateRestaurantController";
 import { CreateItemRestaurantController } from "./controller/restaurant/CreateItemRestaurantController";
 import { FindAllItensRestaurantController } from "./controller/restaurant/FindAllItensRestaurantController";
+import { OpenOrCloseRestaurantController } from "./controller/restaurant/OpenOrCloseRestaurantController";
 
 export const routes = Router();
 
@@ -43,6 +44,7 @@ const updatedDeliveriesEndDate = new UpdateDeliveriesEndDateController()
 
 const createRestaurant = new CreateRestaurantController()
 const createItemRestaurant = new CreateItemRestaurantController()
+const openOrCloseRestaurant = new OpenOrCloseRestaurantController()
 const findAllItensRestaurant = new FindAllItensRestaurantController()
 
 
@@ -506,6 +508,12 @@ routes.get(
 routes.post(
   "/restaurant",
   createRestaurant.handle
+)
+
+routes.post(
+  "/restaurant/:restaurant_id/openorclose",
+  ensureAuthenticateRestaurant,
+  openOrCloseRestaurant.handle
 )
 
 routes.post(

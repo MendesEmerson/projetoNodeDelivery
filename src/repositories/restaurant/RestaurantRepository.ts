@@ -3,6 +3,17 @@ import { IRestaurantRepository } from "./RestaurantRepositoryInteface";
 import { prisma } from "../../database/prismaClient";
 
 export class RestaurantRepository implements IRestaurantRepository {
+    async updateRestaurantById(restaurant_id: string, data: Prisma.RestaurantsUpdateInput): Promise<Restaurants> {
+            const updateRestaurant = await prisma.restaurants.update({
+                where:{
+                    id: restaurant_id
+                },
+                data
+            })
+            return updateRestaurant
+        }
+    
+
     async findAllItensRestaurant(restaurant_id: string): Promise<Items[]> {
         const restaurant = await prisma.items.findMany({
             where: {

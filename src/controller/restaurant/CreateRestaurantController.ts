@@ -11,15 +11,16 @@ export class CreateRestaurantController {
         const restaurantRepository = new RestaurantRepository()
         const createRestaurantService = new CreateRestaurantService(restaurantRepository)
 
-        const { name, username, password } = request.body
+        const { name, username, password, description } = request.body
 
         try {
-            if (!name || !username || !password) {
+            if (!name || !username || !password || description) {
                 throw new InvalidCreateTypeException()
             }
 
             const newRestaurant = await createRestaurantService.execute({
                 name,
+                description,
                 password,
                 username
             })
